@@ -35,7 +35,7 @@ export default function Home() {
       isOpen: false,
       zIndex: 1,
       component: <About />,
-      defaultPosition: { x: 200, y: 200 }
+      defaultPosition: { x: 250, y: 10 }
     },
     {
       id: 'experience',

@@ -45,11 +45,11 @@ export function Projects() {
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
         >
-            <Marquee pauseOnHover={isPaused} className="[--duration:60s] p-0 !gap-4 w-full">
+            <Marquee pauseOnHover={isPaused} className=" p-0 !gap-4 w-full">
                 {projects.map((project) => (
                     <div
                         key={project.id}
-                        className="relative w-[200px] h-[90px] shrink-0 rounded-md overflow-hidden border border-white/10 hover:border-white/50 transition-all hover:scale-105"
+                        className="relative w-[150px] h-[90px] shrink-0 rounded-md overflow-hidden border border-white/10 hover:border-white/50 transition-all hover:scale-105"
                     >
                         <div
                             className="absolute inset-0 bg-cover bg-center transition-transform duration-500 grayscale hover:grayscale-0"

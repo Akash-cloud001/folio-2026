@@ -79,7 +79,7 @@ export function Window({
                         }}
                         className="flex items-center w-full justify-between px-3 py-2 border-b border-accent bg-accent/10 cursor-grab active:cursor-grabbing select-none"
                     >
-                        <span className="text-xs font-mono text-gray-400 uppercase tracking-wider w-full">{title}</span>
+                        <p className="text-xs text-gray-400 uppercase tracking-wider w-full font-geist-mono">{title}</p>
                         <div className="w-4 h-4 rounded-full bg-white/10 border border-white/50 flex items-center justify-center group mr-1" onClick={onClose}>
                             <X size={8} className="text-white" />
                         </div>
