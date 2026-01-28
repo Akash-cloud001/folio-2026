@@ -35,8 +35,8 @@ export function FileTreeNav({ onSelect, className }: FileTreeNavProps) {
                     <File value="my-work" onClick={() => onSelect('projects')}>
                         <p>my-work</p>
                     </File>
-                    <File value="contact-me" onClick={() => onSelect('contact')}>
-                        <p>contact-me</p>
+                    <File value="skills" onClick={() => onSelect('skills')}>
+                        <p>skills</p>
                     </File>
                 </Folder>
             </Tree>

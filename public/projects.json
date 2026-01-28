@@ -1,0 +1,178 @@
+{
+  "works": [
+    {
+      "id": "myforexfirms-platform-01",
+      "name": "MyForexFirms",
+      "url": "https://myforexfirms.com",
+      "imgUrl": "/projects/myforexfirms.png",
+      "tech": [
+        "Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "MongoDB",
+        "Drizzle ORM",
+        "Server-Sent Events",
+        "Cursor AI"
+      ],
+      "desc": "MyForexFirms is a full-scale SaaS platform built for the prop-trading ecosystem, allowing users to discover, compare, and manage forex prop firms in one place. The platform focuses on real-time data updates, scalable backend architecture, and a clean, performance-driven UI. Built with modern web technologies and AI-assisted development workflows, MyForexFirms emphasizes reliability, speed, and an intuitive user experience for traders and admins alike.",
+      "smallDesc": "SaaS platform for discovering and managing forex prop firms with real-time updates."
+    },
+    {
+      "id": "vetking-website-01",
+      "name": "VetKing Life",
+      "url": "https://vetking-life-science.vercel.app/",
+      "imgUrl": "/projects/vetking.png",
+      "tech": [
+        "React",
+        "Tailwind CSS",
+        "Framer Motion",
+        "Cursor AI"
+      ],
+      "desc": "VetKing Life Science is a modern website designed for a veterinary-based company, showcasing its range of healthcare products and brand story. Built using AI-assisted tools like Cursor.ai, the site blends clean UI with interactive motion to present product information and company values in an engaging way.",
+      "smallDesc": "Vibe Coded website for a vet-based company to showcase products and brand story."
+    },
+    {
+      "id": "sinatra-website-01",
+      "name": "Sinatra",
+      "url": "https://sinatra-xi.vercel.app/",
+      "imgUrl": "/projects/sinatra.png",
+      "tech": [
+        "Vite",
+        "React",
+        "Tailwind CSS",
+        "Cursor AI",
+        "Claude AI"
+      ],
+      "desc": "Sinatra is a sleek, responsive website created in just one day using AI-assisted tools. Built with Vite and React for speed, enhanced by Cursor AI for UI efficiency, and guided by Claude AI for content and design flow. Designed for a client in the trading domain, it serves as a hub to showcase promo codes and redirect users to exclusive platform offers.",
+      "smallDesc": "Client website to redirect users to promo links and codes for a trading platform."
+    },
+    {
+      "id": "akash-portfolio",
+      "name": "Akash Folio",
+      "url": "https://akash-codes.in",
+      "imgUrl": "/projects/pro-3.jpeg",
+      "tech": [
+        "react",
+        "threeJs",
+        "r3f",
+        "drei",
+        "tailwind",
+        "aceternity-ui",
+        "react-bits",
+        "lenis"
+      ],
+      "desc": "This portfolio website is a visually stunning and interactive showcase built using React, Three.js, React Three Fiber (R3F), Drei, Aceternity UI, and React Bit for seamless 3D component integration. It features dynamic 3D elements, smooth animations, and an intuitive UI, offering an immersive experience. The site highlights my projects, skills, and achievements in a modern and engaging way.",
+      "smallDesc": "3D portfolio site with immersive visuals and smooth animations. Built using R3F & Drei."
+    },
+    {
+      "id": "nestingo-app",
+      "name": "Nestingo",
+      "url": "https://nestingo.com/",
+      "imgUrl": "/projects/nestingo.png",
+      "tech": [
+        "Next.js",
+        "Node.js",
+        "MongoDB",
+        "Nest.js",
+        "Tailwind CSS",
+        "Motion",
+        "Figma"
+      ],
+      "desc": "Nestingo is a comprehensive PG (Paying Guest) accommodation booking platform that revolutionizes the way students and working professionals find rental housing. The platform connects verified property owners with tenants, offering zero brokerage fees and transparent pricing. Features include advanced search filters, virtual property tours, secure payment processing, tenant-landlord communication portal, and 24/7 customer support. Users can browse through hundreds of verified PG accommodations with detailed amenities, photos, and genuine reviews from previous tenants.",
+      "smallDesc": "Zero-brokerage PG booking platform connecting students & professionals with verified accommodations nationwide."
+    },
+    {
+      "id": "gagan-codes-app",
+      "name": "Gagan Codes",
+      "url": "https://gagancodes.dev/",
+      "imgUrl": "/projects/gagan-codes.png",
+      "tech": [
+        "Next.js",
+        "Node.js",
+        "threeJs",
+        "drei",
+        "R3F",
+        "Tailwind CSS",
+        "Motion",
+        "Figma"
+      ],
+      "desc": "Gagan Codes is a cutting-edge portfolio website that showcases innovative web development with immersive 3D experiences. Built using Next.js for optimal performance and SEO, the platform features stunning Three.js 3D visualizations powered by React Three Fiber (R3F) and Drei for enhanced 3D capabilities. The website demonstrates modern web development practices with smooth animations, responsive design using Tailwind CSS, and interactive motion effects. The portfolio highlights expertise in full-stack development, 3D web graphics, and creating engaging user experiences that push the boundaries of web technology.",
+      "smallDesc": "Immersive 3D portfolio website showcasing modern web development with Three.js and React Three Fiber."
+    },
+    {
+      "id": "vrmultiservices-app",
+      "name": "VR Multiservices",
+      "url": "https://www.vrmultiservices.in/",
+      "imgUrl": "/projects/vr-multiservices.png",
+      "tech": [
+        "React Js",
+        "Tailwind",
+        "Motion",
+        "Figma"
+      ],
+      "desc": "VR Multiservices is a premier event management platform that crafts unforgettable experiences and creates lasting brand impact. Specializing in corporate gatherings, exhibitions, brand activations, and roadshows, the platform offers comprehensive event planning solutions with strategic execution. Features include event portfolio showcase, client testimonial system, customized branding materials catalog (boards, stands, promotional items), vendor management dashboard, and ROI tracking analytics. The platform connects event organizers with clients while providing end-to-end project management tools, budget calculators, timeline tracking, and real-time collaboration features to ensure flawless event execution.",
+      "smallDesc": "Premier event management platform creating unforgettable experiences through strategic planning & custom branding solutions."
+    },
+    {
+      "id": "walkbuy-platform",
+      "name": "WalkBuy",
+      "url": "https://walkbuyapp.com/",
+      "imgUrl": "/projects/pro-5.png",
+      "tech": [
+        "React",
+        "Node.js",
+        "Context API",
+        "TailwindCSS"
+      ],
+      "desc": "A revolutionary local shopping platform that bridges the gap between traditional street shops and modern digital commerce. WalkBuy enables customers to discover, browse, and preview products from nearby local businesses through an intuitive mobile app, while providing shop owners with WalkShop - a simple showcase management system. The platform promotes local economy by allowing users to search for shops, products, and offers in their vicinity, preview items digitally, then visit the physical store for personal consultation, fitting, and purchase. Features real-time inventory updates, location-based discovery, merchant dashboard, customer reviews, and seamless integration between online browsing and offline shopping experience.",
+      "smallDesc": "Discover and shop local products digitally. Bridging offline stores with online visibility."
+    },
+    {
+      "id": "prodigy-football",
+      "name": "Prodigy",
+      "url": "https://prodigyfootball.com.au/",
+      "imgUrl": "/projects/pro-4.png",
+      "tech": [
+        "React",
+        "TailwindCSS",
+        "Motion",
+        "Node.js",
+        "Stripe",
+        "Context API"
+      ],
+      "desc": "A professional football coaching platform that bridges the gap between grassroots and elite level training. The website features dynamic booking systems for private sessions, team coaching programs, and high-performance academies. Built with modern web technologies to provide seamless user experience for players, coaches, and clubs across Australia. Includes real-time scheduling, payment processing, progress tracking, and interactive training modules designed to develop well-rounded and intelligent community footballers through specialized coaching methodologies.",
+      "smallDesc": "Football coaching platform with bookings, payments, and training modules for all levels."
+    },
+    {
+      "id": "solar-system-3d",
+      "name": "Solar System",
+      "url": "https://solar-system-00.web.app/",
+      "imgUrl": "/projects/pro-2.jpeg",
+      "tech": [
+        "react",
+        "threeJs",
+        "r3f",
+        "drei",
+        "css",
+        "figma"
+      ],
+      "desc": "The Solar System project is an interactive 3D visualization of our solar system, developed using React, React Three Fiber (R3F), Three.js, and Drei. This application offers users an immersive experience, allowing them to explore the planets and their orbits in a visually appealing manner.",
+      "smallDesc": "Explore a 3D solar system in your browser. Built with React Three Fiber and Drei."
+    },
+    {
+      "id": "anipedia-app",
+      "name": "Anipedia",
+      "url": "https://ani-pedia.web.app/",
+      "imgUrl": "/projects/pro-1.jpeg",
+      "tech": [
+        "HTML",
+        "CSS",
+        "react",
+        "tailwind",
+        "API's"
+      ],
+      "desc": "AniPedia is a web application designed for anime enthusiasts, offering up-to-date information on currently airing anime and top performers. Leveraging the Jikan API, it provides detailed insights into various anime series. Users can search for specific anime, watch trailers via YouTube, and find platforms where they can stream their chosen series.",
+      "smallDesc": "Discover trending anime with trailers, ratings & stream links. Powered by Jikan API."
+    }
+  ]
+}

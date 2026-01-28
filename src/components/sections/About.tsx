@@ -3,9 +3,11 @@
 import React, { useEffect } from 'react';
 import { ActivityCalendar } from 'react-activity-calendar';
 import { useGitHubStore } from '@/stores/github.store';
-import { RefreshCw } from 'lucide-react';
+import { File, FileBadge, RefreshCw } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-
+import GithubIcon from '@/components/svgs/Github';
+import LinkedInIcon from '@/components/svgs/LinkedIn';
+import XIcon from '@/components/svgs/X';
 export function About() {
     // Get state and actions from Zustand store
     const { user, contributions, loading, fetchGitHubData } = useGitHubStore();
@@ -95,7 +97,9 @@ export function About() {
                         {/* Designation */}
                         <p className="text-xs font-mono text-gray-400 uppercase tracking-normal">
                             {/* {designation} */}
-                            Where Strong Code Meets Smart Design to Drive Growth
+                            {/* Where Strong Code Meets Smart Design to Drive Growth */}
+                            I like working with people who care about what they build.
+
                         </p>
                     </div>
                 </div>
@@ -117,6 +121,32 @@ export function About() {
                         </div>
                     </div>
                 )}
+
+            </div>
+            {/* CTA */}
+            <div className='flex flex-col sm:flex-row w-full items-start justify-between px-2 pb-1'>
+                <div className='flex gap-3'>
+                    <a href="https://x.com/Akash_cloud001" target="_blank" rel="noopener noreferrer">
+                        <XIcon className='h-6 w-6 text-white/80 hover:text-white transition-color ' />
+                    </a>
+                    <a href="https://github.com/Akash-cloud001" target="_blank" rel="noopener noreferrer">
+                        <GithubIcon className='h-6 w-6 text-white/80 hover:text-white transition-color ' />
+                    </a>
+                    <a href="https://www.linkedin.com/in/akash-parmar-/" target="_blank" rel="noopener noreferrer">
+                        <LinkedInIcon className='h-6 w-6 text-white/80 hover:text-white transition-color ' />
+                    </a>
+                    {/* <p className='font-mono text-xs text-white/50'> </p> */}
+                </div>
+                <a
+                    href="/resume.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-white px-4 py-1 rounded-md flex items-center gap-2 text-black text-sm font-mono"
+                >
+                    <FileBadge className="h-4 w-4 text-black transition-colors" />
+                    Resume / CV
+                </a>
+
             </div>
         </div>
     );

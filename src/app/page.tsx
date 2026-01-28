@@ -9,6 +9,7 @@ import { About } from '@/components/sections/About';
 import { Projects } from '@/components/sections/Projects';
 import { Experience } from '@/components/sections/Experience';
 import { Contact } from '@/components/sections/Contact';
+import { Skills } from '@/components/sections/skills';
 
 interface WindowState {
   id: string;
@@ -59,6 +60,14 @@ export default function Home() {
       isOpen: false,
       zIndex: 1,
       component: <Contact />,
+      defaultPosition: { x: 250, y: 250 }
+    },
+    {
+      id: 'skills',
+      title: 'SKILLS.txt',
+      isOpen: false,
+      zIndex: 1,
+      component: <Skills />,
       defaultPosition: { x: 250, y: 250 }
     },
   ]);

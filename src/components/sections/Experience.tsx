@@ -1,48 +1,102 @@
 'use client';
 
 import React from 'react';
+import { motion } from 'framer-motion';
+import { MapPin, Briefcase, Calendar } from 'lucide-react';
 
-const experience = [
+const experiences = [
     {
-        role: 'Senior Frontend Engineer',
-        company: 'TechCorp',
-        period: '2023 - PRESENT',
-        description: 'Leading the frontend team in building scalable web applications using Next.js and React. implemented a new design system reducing development time by 30%.'
+        id: 1,
+        role: 'Frontend Developer',
+        company: 'Duple IT Solutions Pvt. Ltd.',
+        type: 'Full-time',
+        period: 'Sep 2025 - Present',
+        duration: '5 mos',
+        location: 'Mohali',
+        workMode: 'On-site',
+        skills: ['Next.js', 'TypeScript', 'Tailwind', 'Vercel', 'Cursor', 'Antigravity'],
+        description: 'Building scalable web applications with modern frontend technologies.'
     },
     {
-        role: 'Full Stack Developer',
-        company: 'Creative Agency',
-        period: '2021 - 2023',
-        description: 'Developed immersive digital experiences for high-profile clients. Worked with WebGL, Three.js and GSAP for complex animations.'
+        id: 2,
+        role: 'UI Developer',
+        company: 'EvoMorf',
+        type: 'Full-time',
+        period: 'Jan 2024 - May 2025',
+        duration: '1 yr 5 mos',
+        location: 'Mohali, India',
+        workMode: 'On-site',
+        skills: ['Front-End Development', 'UI/UX', 'React', 'JavaScript', 'Vue', 'Nuxt2/3', 'Tailwind', 'Next.js'],
+        description: 'Developed user interfaces and implemented design systems for web applications.'
     },
     {
-        role: 'Junior Developer',
-        company: 'StartUp Inc',
-        period: '2019 - 2021',
-        description: 'Collaborated with designers to implement pixel-perfect UIs. Optimized website performance achieving 90+ Lighthouse scores.'
+        id: 3,
+        role: 'Cyber Security Intern',
+        company: 'Accenture in India',
+        type: 'Internship',
+        period: 'Apr 2023 - Aug 2023',
+        duration: '5 mos',
+        location: 'Bengaluru, Karnataka, India',
+        workMode: 'Remote',
+        skills: ['Teamwork', 'Cyber Security', 'Problem Solving'],
+        description: 'Worked on security protocols and vulnerability assessments.'
     }
 ];
 
 export function Experience() {
     return (
-        <div className="p-6 text-white">
-            <h2 className="text-xl font-bold border-b border-white/10 pb-2 mb-6">EXPERIENCE</h2>
+        <div className="text-white w-full max-w-xs md:max-w-[500px]">
+            {/* Experience List */}
+            <div className="flex flex-col gap-2">
+                {experiences.map((exp, index) => (
+                    <motion.div
+                        key={exp.id}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.1, duration: 0.3 }}
+                        className="group relative border border-white/10 rounded-lg p-4 hover:border-white/30 transition-all hover:bg-white/5"
+                    >
+                        <div className="flex items-start gap-4">
+                            {/* Content */}
+                            <div className="flex-1 min-w-0">
+                                {/* Header */}
+                                <div className="flex items-start justify-between gap-2 mb-2">
+                                    <div>
+                                        <h3 className="text-base font-bold text-white group-hover:text-white transition-colors">
+                                            {exp.role}
+                                        </h3>
+                                        <p className="text-sm text-gray-400">
+                                            {exp.company} · {exp.type}
+                                        </p>
+                                    </div>
+                                </div>
 
-            <div className="space-y-8">
-                {experience.map((job, index) => (
-                    <div key={index} className="group relative border-l border-white/10 pl-6 hover:border-white/50 transition-colors">
-                        <div className="absolute -left-[3px] top-0 w-[5px] h-[5px] bg-white rounded-full opacity-50 group-hover:opacity-100 transition-opacity" />
+                                {/* Period & Location */}
+                                <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-gray-500 mb-3">
+                                    <div className="flex items-center gap-1">
+                                        <Calendar className="w-3 h-3" />
+                                        <span>{exp.period} · {exp.duration}</span>
+                                    </div>
+                                    <div className="flex items-center gap-1">
+                                        <MapPin className="w-3 h-3" />
+                                        <span>{exp.location} · {exp.workMode}</span>
+                                    </div>
+                                </div>
 
-                        <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-2">
-                            <h3 className="text-lg font-bold group-hover:text-white transition-colors text-white/90">{job.role}</h3>
-                            <span className="text-xs font-mono text-gray-500">{job.period}</span>
+                                {/* Skills */}
+                                <div className="flex flex-wrap gap-2">
+                                    {exp.skills.map((skill, idx) => (
+                                        <span
+                                            key={idx}
+                                            className="px-2 py-1 text-xs bg-white/5 border border-white/10 rounded text-gray-400 hover:bg-white/10 transition-colors"
+                                        >
+                                            {skill}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
                         </div>
-
-                        <div className="text-sm font-mono text-gray-400 mb-3">{job.company}</div>
-                        <p className="text-sm text-gray-400/80 leading-relaxed max-w-2xl">
-                            {job.description}
-                        </p>
-                    </div>
+                    </motion.div>
                 ))}
             </div>
         </div>
