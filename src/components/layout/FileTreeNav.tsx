@@ -1,9 +1,11 @@
 'use client';
 
 import React from 'react';
+import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { Tree, Folder, File } from '@/components/ui/file-tree';
 import { cn } from '@/lib/utils';
+import { useDesktopDragBounds } from '@/components/layout/Desktop';
 
 interface FileTreeNavProps {
     onSelect: (id: string) => void;
@@ -11,9 +13,14 @@ interface FileTreeNavProps {
 }
 
 export function FileTreeNav({ onSelect, className }: FileTreeNavProps) {
+    const router = useRouter();
+    const dragBoundsRef = useDesktopDragBounds();
+
     return (
         <motion.div
             drag
+            dragConstraints={dragBoundsRef ?? false}
+            dragElastic={0}
             dragMomentum={false}
             initial={{ x: 20, y: 20 }}
             className={cn(
@@ -23,7 +30,7 @@ export function FileTreeNav({ onSelect, className }: FileTreeNavProps) {
         >
             <Tree
                 className="h-full"
-                initialExpandedItems={['src']}
+                initialExpandedItems={['src', 'case-studies']}
             >
                 <Folder value="src" element="src">
                     <File value="about-me" onClick={() => onSelect('about')}>
@@ -37,6 +44,17 @@ export function FileTreeNav({ onSelect, className }: FileTreeNavProps) {
                     </File>
                     <File value="skills" onClick={() => onSelect('skills')}>
                         <p>Skills.txt</p>
+                    </File>
+                </Folder>
+                <Folder value="case-studies" element="case-studies">
+                    <File
+                        value="case-study-my-forex-firms"
+                        onClick={() => router.push('/case-studies/my-forex-firms')}
+                    >
+                        <p>my-forex-firms.md</p>
+                    </File>
+                    <File value="case-study-nestingo" onClick={() => router.push('/case-studies/nestingo')}>
+                        <p>nestingo.md</p>
                     </File>
                 </Folder>
             </Tree>

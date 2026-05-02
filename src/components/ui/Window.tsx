@@ -4,6 +4,7 @@ import React, { useSyncExternalStore } from 'react';
 import { motion, useDragControls, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useDesktopDragBounds } from '@/components/layout/Desktop';
 
 interface WindowProps {
     id: string;
@@ -31,6 +32,7 @@ export function Window({
     className,
 }: WindowProps) {
     const dragControls = useDragControls();
+    const dragBoundsRef = useDesktopDragBounds();
 
     /** Match Tailwind `md` — avoids a first-paint frame where `isMobile` is false and drag is enabled. */
     const isMobile = useSyncExternalStore(
@@ -53,6 +55,8 @@ export function Window({
                     drag
                     dragListener={false}
                     dragControls={dragControls}
+                    dragConstraints={dragBoundsRef ?? false}
+                    dragElastic={0}
                     dragMomentum={false}
                     initial={{
                         opacity: 0,

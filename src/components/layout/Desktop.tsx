@@ -1,7 +1,15 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { createContext, useContext, useRef } from 'react';
 import { DitherBackground } from '@/components/backgrounds/DitherBackground';
+
+const DesktopDragBoundsContext = createContext<React.RefObject<HTMLDivElement | null> | null>(
+    null
+);
+
+export function useDesktopDragBounds() {
+    return useContext(DesktopDragBoundsContext);
+}
 
 interface DesktopProps {
     children: React.ReactNode;
@@ -10,18 +18,22 @@ interface DesktopProps {
 }
 
 export function Desktop({ children, className, bottomBar }: DesktopProps) {
-    const constraintsRef = useRef(null);
+    const dragBoundsRef = useRef<HTMLDivElement>(null);
 
     return (
         <div
-            ref={constraintsRef}
             className={`relative flex h-full min-h-0 w-full max-h-full flex-col overflow-hidden ${className}`}
         >
             <DitherBackground colorIntensity={1} />
 
-            <div className="flex-1 relative w-full h-full">
-                {children}
-            </div>
+            <DesktopDragBoundsContext.Provider value={dragBoundsRef}>
+                <div
+                    ref={dragBoundsRef}
+                    className="relative h-full min-h-0 w-full min-w-0 flex-1 overflow-hidden"
+                >
+                    {children}
+                </div>
+            </DesktopDragBoundsContext.Provider>
 
             {bottomBar && (
                 <div className="relative z-40 w-full shrink-0">
