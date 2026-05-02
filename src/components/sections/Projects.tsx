@@ -34,14 +34,14 @@ export function Projects() {
     // Show loading state if needed
     if (loading && projects.length === 0) {
         return (
-            <div className="w-full h-full flex items-center justify-center">
-                <span className="text-white/50 font-mono text-sm">Loading projects...</span>
+            <div className="flex min-h-[100px] w-full items-center justify-center py-6 md:h-full md:min-h-0 md:py-0">
+                <span className="font-mono text-sm text-white/50">Loading projects...</span>
             </div>
         );
     }
 
     return (
-        <div className="w-full h-full flex items-center overflow-hidden">
+        <div className="flex w-full min-h-0 items-center overflow-hidden py-2 md:h-full md:py-0">
             {/* Custom Infinite Scroll Container */}
             <div
                 ref={containerRef}

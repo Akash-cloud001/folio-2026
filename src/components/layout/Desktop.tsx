@@ -15,7 +15,7 @@ export function Desktop({ children, className, bottomBar }: DesktopProps) {
     return (
         <div
             ref={constraintsRef}
-            className={`relative w-full h-full overflow-hidden flex flex-col ${className}`}
+            className={`relative flex h-full min-h-0 w-full max-h-full flex-col overflow-hidden ${className}`}
         >
             <DitherBackground colorIntensity={1} />
 

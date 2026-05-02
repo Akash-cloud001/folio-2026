@@ -45,7 +45,7 @@ const experiences = [
 
 export function Experience() {
     return (
-        <div className="text-white w-full max-w-xs md:max-w-[500px]">
+        <div className="text-white w-full max-w-full md:max-w-[500px]">
             {/* Experience List */}
             <div className="flex flex-col gap-2">
                 {experiences.map((exp, index) => (

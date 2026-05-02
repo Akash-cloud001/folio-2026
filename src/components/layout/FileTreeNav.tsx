@@ -17,7 +17,7 @@ export function FileTreeNav({ onSelect, className }: FileTreeNavProps) {
             dragMomentum={false}
             initial={{ x: 20, y: 20 }}
             className={cn(
-                "absolute z-3 w-fit h-fit min-w-[200px] bg-black/80 backdrop-blur-md border border-white/20 rounded-lg shadow-2xl p-4 cursor-grab active:cursor-grabbing",
+                'absolute z-[1] w-fit min-w-[200px] cursor-grab rounded-lg border border-white/20 bg-black/80 p-4 shadow-2xl backdrop-blur-md active:cursor-grabbing touch-manipulation',
                 className
             )}
         >
@@ -27,16 +27,16 @@ export function FileTreeNav({ onSelect, className }: FileTreeNavProps) {
             >
                 <Folder value="src" element="src">
                     <File value="about-me" onClick={() => onSelect('about')}>
-                        <p>about-me</p>
+                        <p>About-me.txt</p>
                     </File>
                     <File value="experience" onClick={() => onSelect('experience')}>
-                        <p>experience</p>
+                        <p>Experience.log</p>
                     </File>
                     <File value="my-work" onClick={() => onSelect('projects')}>
-                        <p>my-work</p>
+                        <p>Projects.db</p>
                     </File>
                     <File value="skills" onClick={() => onSelect('skills')}>
-                        <p>skills</p>
+                        <p>Skills.txt</p>
                     </File>
                 </Folder>
             </Tree>

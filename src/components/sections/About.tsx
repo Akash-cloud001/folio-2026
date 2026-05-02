@@ -1,40 +1,60 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useSyncExternalStore } from 'react';
 import { ActivityCalendar } from 'react-activity-calendar';
 import { useGitHubStore } from '@/stores/github.store';
-import { File, FileBadge, RefreshCw } from 'lucide-react';
+import { FileBadge, RefreshCw } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { cn } from '@/lib/utils';
 import GithubIcon from '@/components/svgs/Github';
 import LinkedInIcon from '@/components/svgs/LinkedIn';
 import XIcon from '@/components/svgs/X';
+
+function useNarrowCalendar() {
+    return useSyncExternalStore(
+        (onStoreChange) => {
+            if (typeof window === 'undefined') return () => {};
+            const mq = window.matchMedia('(max-width: 639px)');
+            mq.addEventListener('change', onStoreChange);
+            return () => mq.removeEventListener('change', onStoreChange);
+        },
+        () =>
+            typeof window !== 'undefined' &&
+            window.matchMedia('(max-width: 639px)').matches,
+        () => false
+    );
+}
+
 export function About() {
-    // Get state and actions from Zustand store
     const { user, contributions, loading, fetchGitHubData } = useGitHubStore();
-
-    // Toggle state for avatar image
     const [showGitHubAvatar, setShowGitHubAvatar] = React.useState(false);
+    const narrowCalendar = useNarrowCalendar();
 
-    // Fetch data on component mount
     useEffect(() => {
         fetchGitHubData();
     }, [fetchGitHubData]);
 
-    // Fallback data
     const displayName = user?.name || 'Akash Parmar';
     const avatarUrl = user?.avatar_url || 'https://github.com/Akash-cloud001.png';
     const designation = 'Full Stack Developer';
 
-    // Toggle avatar handler
     const toggleAvatar = () => {
-        setShowGitHubAvatar(prev => !prev);
+        setShowGitHubAvatar((prev) => !prev);
     };
 
+    const calendarBlockSize = narrowCalendar ? 8 : 12;
+    const calendarBlockMargin = narrowCalendar ? 2 : 4;
+    const calendarFontSize = narrowCalendar ? 8 : 10;
+
     return (
-        <div className="text-white space-y-6 w-full max-w-4xl">
-            {/* GitHub Activity Heatmap */}
+        <div className="w-full max-w-4xl space-y-4 text-white sm:space-y-5 md:space-y-6">
             {(loading || contributions.length > 0) && (
-                <div className="w-full overflow-hidden relative">
+                <div
+                    className={cn(
+                        'relative w-full overflow-x-auto overflow-y-hidden',
+                        narrowCalendar && '-mx-1 px-1 sm:mx-0 sm:px-0'
+                    )}
+                >
                     <ActivityCalendar
                         data={contributions}
                         loading={loading}
@@ -42,111 +62,127 @@ export function About() {
                             light: ['hsl(0, 0%, 92%)', 'firebrick'],
                             dark: ['#333', 'rgba(255, 255, 255, 1)'],
                         }}
-                        blockSize={12}
-                        blockMargin={4}
-                        fontSize={10}
+                        blockSize={calendarBlockSize}
+                        blockMargin={calendarBlockMargin}
+                        fontSize={calendarFontSize}
                         showTotalCount={false}
                     />
                 </div>
             )}
-            {/* Profile Section */}
-            <div className="flex flex-col space-y-3 sm:space-y-0 -mt-6 sm:flex-row w-full justify-between items-center">
-                <div className="flex items-center space-x-4">
-                    {/* Avatar */}
-                    <div className="relative w-16 h-16">
+
+            <div className="mt-0 flex w-full flex-col items-center gap-5 sm:-mt-6 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
+                {/** sm:w-auto so this column does not stretch full width — keeps stats on the right (justify-between). */}
+                <div className="flex w-full max-w-md flex-col items-center gap-3 text-center sm:w-auto sm:max-w-none sm:flex-row sm:items-center sm:gap-4 sm:text-left">
+                    <div className="relative h-16 w-16 shrink-0">
                         <AnimatePresence mode="wait">
                             {showGitHubAvatar ? (
                                 <motion.img
                                     key="github-avatar"
                                     src={avatarUrl}
                                     alt={displayName}
-                                    className="absolute inset-0 w-16 h-16 rounded-full border-4 border-white/10 shadow-xl grayscale hover:grayscale-0 transition-all duration-300 object-cover"
+                                    className="absolute inset-0 h-16 w-16 rounded-full border-4 border-white/10 object-cover shadow-xl grayscale transition-all duration-300 hover:grayscale-0"
                                     initial={{ opacity: 0, rotate: -180, scale: 0.5 }}
                                     animate={{ opacity: 1, rotate: 0, scale: 1 }}
                                     exit={{ opacity: 0, rotate: 180, scale: 0.5 }}
-                                    transition={{ duration: 0.5, ease: "easeInOut" }}
+                                    transition={{ duration: 0.5, ease: 'easeInOut' }}
                                 />
                             ) : (
                                 <motion.img
                                     key="local-avatar"
                                     src="/akash.png"
                                     alt={displayName}
-                                    className="absolute inset-0 w-16 h-16 rounded-full border-4 border-white/10 shadow-xl grayscale hover:grayscale-0 transition-all duration-300 object-cover"
+                                    className="absolute inset-0 h-16 w-16 rounded-full border-4 border-white/10 object-cover shadow-xl grayscale transition-all duration-300 hover:grayscale-0"
                                     initial={{ opacity: 0, rotate: -180, scale: 0.5 }}
                                     animate={{ opacity: 1, rotate: 0, scale: 1 }}
                                     exit={{ opacity: 0, rotate: 180, scale: 0.5 }}
-                                    transition={{ duration: 0.5, ease: "easeInOut" }}
+                                    transition={{ duration: 0.5, ease: 'easeInOut' }}
                                 />
                             )}
                         </AnimatePresence>
-                        <div
-                            className="absolute bottom-0.5 right-0.5 rounded-full border-4 border-black cursor-pointer"
-                            title="Toggle avatar"
+                        <button
+                            type="button"
+                            title="Toggle avatar source"
+                            aria-label="Toggle between local and GitHub profile photo"
                             onClick={toggleAvatar}
+                            className="absolute -bottom-1 -right-1 flex size-11 items-center justify-center rounded-full border-4 border-black bg-zinc-800 touch-manipulation"
                         >
-                            <RefreshCw className='h-3 w-3 text-white' />
-                        </div>
+                            <RefreshCw className="h-3.5 w-3.5 text-white" aria-hidden />
+                        </button>
                     </div>
 
-                    <div>
-                        {/* Name */}
-                        <h2 className="text-xl font-bold text-white tracking-tight">
+                    <div className="min-w-0 sm:max-w-md md:max-w-lg">
+                        <h2 className="text-xl font-bold tracking-tight text-white md:text-2xl">
                             {displayName}
                         </h2>
-
-                        {/* Designation */}
-                        <p className="text-xs font-mono text-gray-400 uppercase tracking-normal">
-                            {/* {designation} */}
-                            {/* Where Strong Code Meets Smart Design to Drive Growth */}
+                        <p className="mt-0.5 font-mono text-[10px] uppercase tracking-wider text-zinc-500">
+                            {designation}
+                        </p>
+                        <p className="mt-2 max-w-prose font-mono text-sm leading-relaxed text-zinc-400 sm:text-xs sm:uppercase sm:leading-normal sm:tracking-normal">
                             I like working with people who care about what they build.
-
                         </p>
                     </div>
                 </div>
 
-                {/* Stats */}
                 {user && (
-                    <div className="flex gap-6 pt-4 text-sm">
+                    <div className="grid w-full max-w-xs shrink-0 grid-cols-3 gap-2 pt-1 text-sm sm:flex sm:w-auto sm:max-w-none sm:justify-end sm:gap-8 sm:pt-0">
                         <div className="text-center">
                             <div className="font-bold text-white">{user.public_repos}</div>
-                            <div className="text-gray-500 text-xs">Repositories</div>
+                            <div className="text-xs text-gray-500">
+                                <span className="sm:hidden">Repos</span>
+                                <span className="hidden sm:inline">Repositories</span>
+                            </div>
                         </div>
                         <div className="text-center">
                             <div className="font-bold text-white">{user.followers}</div>
-                            <div className="text-gray-500 text-xs">Followers</div>
+                            <div className="text-xs text-gray-500">Followers</div>
                         </div>
                         <div className="text-center">
                             <div className="font-bold text-white">{user.following}</div>
-                            <div className="text-gray-500 text-xs">Following</div>
+                            <div className="text-xs text-gray-500">Following</div>
                         </div>
                     </div>
                 )}
-
             </div>
-            {/* CTA */}
-            <div className='flex flex-col sm:flex-row w-full items-start justify-between px-2 pb-1'>
-                <div className='flex gap-3'>
-                    <a href="https://x.com/Akash_cloud001" target="_blank" rel="noopener noreferrer">
-                        <XIcon className='h-6 w-6 text-white/80 hover:text-white transition-color ' />
+
+            <div className="flex w-full flex-col items-stretch gap-4 pb-1 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:pb-0 md:gap-6">
+                <div className="flex justify-center gap-5 sm:justify-start sm:gap-4">
+                    <a
+                        href="https://x.com/Akash_cloud001"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex min-h-11 min-w-11 items-center justify-center touch-manipulation sm:min-h-0 sm:min-w-0 sm:p-1"
+                        aria-label="X (Twitter)"
+                    >
+                        <XIcon className="h-6 w-6 text-white/80 transition-colors hover:text-white" />
                     </a>
-                    <a href="https://github.com/Akash-cloud001" target="_blank" rel="noopener noreferrer">
-                        <GithubIcon className='h-6 w-6 text-white/80 hover:text-white transition-color ' />
+                    <a
+                        href="https://github.com/Akash-cloud001"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex min-h-11 min-w-11 items-center justify-center touch-manipulation sm:min-h-0 sm:min-w-0 sm:p-1"
+                        aria-label="GitHub"
+                    >
+                        <GithubIcon className="h-6 w-6 text-white/80 transition-colors hover:text-white" />
                     </a>
-                    <a href="https://www.linkedin.com/in/akash-parmar-/" target="_blank" rel="noopener noreferrer">
-                        <LinkedInIcon className='h-6 w-6 text-white/80 hover:text-white transition-color ' />
+                    <a
+                        href="https://www.linkedin.com/in/akash-parmar-/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex min-h-11 min-w-11 items-center justify-center touch-manipulation sm:min-h-0 sm:min-w-0 sm:p-1"
+                        aria-label="LinkedIn"
+                    >
+                        <LinkedInIcon className="h-6 w-6 text-white/80 transition-colors hover:text-white" />
                     </a>
-                    {/* <p className='font-mono text-xs text-white/50'> </p> */}
                 </div>
                 <a
                     href="/resume.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-white px-4 py-1 rounded-md flex items-center gap-2 text-black text-sm font-mono"
+                    className="inline-flex w-full shrink-0 items-center justify-center gap-2 rounded-md bg-white px-4 py-2.5 font-mono text-sm text-black touch-manipulation sm:w-auto sm:px-5 sm:py-2"
                 >
-                    <FileBadge className="h-4 w-4 text-black transition-colors" />
+                    <FileBadge className="h-4 w-4 shrink-0 text-black" />
                     Resume / CV
                 </a>
-
             </div>
         </div>
     );

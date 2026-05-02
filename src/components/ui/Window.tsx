@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useSyncExternalStore } from 'react';
 import { motion, useDragControls, AnimatePresence } from 'framer-motion';
-import { X, Minus, Maximize2 } from 'lucide-react';
+import { X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface WindowProps {
@@ -30,24 +30,28 @@ export function Window({
     defaultPosition = { x: 0, y: 0 },
     className,
 }: WindowProps) {
-    const constraintsRef = useRef(null);
     const dragControls = useDragControls();
 
-    // Basic mobile check - could be more robust
-    const [isMobile, setIsMobile] = useState(false);
-
-    useEffect(() => {
-        const checkMobile = () => setIsMobile(window.innerWidth < 768);
-        checkMobile();
-        window.addEventListener('resize', checkMobile);
-        return () => window.removeEventListener('resize', checkMobile);
-    }, []);
+    /** Match Tailwind `md` — avoids a first-paint frame where `isMobile` is false and drag is enabled. */
+    const isMobile = useSyncExternalStore(
+        (onStoreChange) => {
+            if (typeof window === 'undefined') return () => {};
+            const mq = window.matchMedia('(max-width: 767px)');
+            mq.addEventListener('change', onStoreChange);
+            return () => mq.removeEventListener('change', onStoreChange);
+        },
+        () =>
+            typeof window !== 'undefined' &&
+            window.matchMedia('(max-width: 767px)').matches,
+        () => false
+    );
 
     return (
         <AnimatePresence>
             {isOpen && (
                 <motion.div
-                    drag={!isMobile}
+                    drag
+                    dragListener={false}
                     dragControls={dragControls}
                     dragMomentum={false}
                     initial={{
@@ -63,21 +67,22 @@ export function Window({
                         // to allow free movement. 
                     }}
                     exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.15 } }}
-                    onPointerDown={onFocus}
                     style={{ zIndex, position: 'absolute' }}
                     className={cn(
-                        "flex flex-col rounded-lg border border-accent bg-black/95 shadow-2xl backdrop-blur-sm overflow-hidden",
-                        isMobile ? "w-[90vw] h-[80vh] left-[5vw] top-[10vh] !transform-none" : "min-w-[400px] max-w-[99vw] max-h-[80vh]",
+                        'flex flex-col overflow-hidden rounded-lg border border-accent bg-black/95 shadow-2xl backdrop-blur-sm',
+                        isMobile
+                            ? 'left-[5vw] top-[max(0.5rem,env(safe-area-inset-top,0px))] h-auto max-h-[min(calc(100dvh-env(safe-area-inset-top)-env(safe-area-inset-bottom)-0.75rem),92dvh)] w-[90vw] min-h-0'
+                            : 'min-h-0 min-w-[400px] max-h-[min(calc(100dvh-1.5rem),96dvh)] max-w-[99vw]',
                         className
                     )}
                 >
                     {/* Title Bar */}
                     <div
                         onPointerDown={(e) => {
-                            dragControls.start(e);
                             onFocus();
+                            dragControls.start(e);
                         }}
-                        className="flex items-center w-full justify-between px-3 py-2 border-b border-accent bg-accent/10 cursor-grab active:cursor-grabbing select-none"
+                        className="flex w-full cursor-grab touch-none select-none items-center justify-between border-b border-accent bg-accent/10 px-3 py-2 active:cursor-grabbing"
                     >
                         <p className="text-xs text-gray-400 uppercase tracking-wider w-full font-geist-mono">{title}</p>
                         <div className="w-4 h-4 rounded-full bg-white/10 border border-white/50 flex items-center justify-center group mr-1" onClick={onClose}>
@@ -85,8 +90,15 @@ export function Window({
                         </div>
                     </div>
 
-                    {/* Content */}
-                    <div className="flex-1 overflow-auto p-2 custom-scrollbar relative">
+                    {/* Content — desktop: flex-1 fills the pane; mobile: height follows content up to max-h */}
+                    <div
+                        className={cn(
+                            'relative min-h-0 p-2 custom-scrollbar',
+                            isMobile
+                                ? 'max-h-[calc(100dvh-env(safe-area-inset-top)-env(safe-area-inset-bottom)-3.25rem)] overflow-y-auto overflow-x-hidden'
+                                : 'flex-1 overflow-auto'
+                        )}
+                    >
                         {/* Scanline effect overlay (optional, low opacity) */}
                         <div className="pointer-events-none absolute inset-0 bg-repeat bg-[length:100%_4px] opacity-[0.03] z-10"
                             style={{ backgroundImage: 'linear-gradient(to bottom, transparent 50%, #000 50%)' }} />

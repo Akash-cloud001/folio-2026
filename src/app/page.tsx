@@ -20,6 +20,14 @@ interface WindowState {
   defaultPosition: { x: number; y: number };
 }
 
+/** Keep windows below `FileTreeNav` (`z-[10000]`) so the tree stays visible and tappable. */
+const MAX_WINDOW_Z = 9990;
+
+function nextWindowZIndex(prev: WindowState[]): number {
+  const maxZ = Math.max(...prev.map((w) => w.zIndex));
+  return Math.min(maxZ + 1, MAX_WINDOW_Z);
+}
+
 export default function Home() {
   const [windows, setWindows] = useState<WindowState[]>([
     // {
@@ -48,7 +56,7 @@ export default function Home() {
     },
     {
       id: 'projects',
-      title: 'PROJECTS_DB',
+      title: 'PROJECTS.DB',
       isOpen: true,
       zIndex: 1,
       component: <Projects />,
@@ -73,20 +81,17 @@ export default function Home() {
   ]);
 
   const bringToFront = (id: string) => {
-    setWindows(prev => {
-      const maxZ = Math.max(...prev.map(w => w.zIndex));
-      return prev.map(w => w.id === id ? { ...w, zIndex: maxZ + 1 } : w);
-    });
+    setWindows((prev) =>
+      prev.map((w) => (w.id === id ? { ...w, zIndex: nextWindowZIndex(prev) } : w))
+    );
   };
 
   const openWindow = (id: string) => {
-    setWindows(prev => {
-      const window = prev.find(w => w.id === id);
-      const maxZ = Math.max(...prev.map(w => w.zIndex));
-
-      // If window exists, bring to front and ensure open
-      if (window) {
-        return prev.map(w => w.id === id ? { ...w, isOpen: true, zIndex: maxZ + 1 } : w);
+    setWindows((prev) => {
+      const win = prev.find((w) => w.id === id);
+      if (win) {
+        const z = nextWindowZIndex(prev);
+        return prev.map((w) => (w.id === id ? { ...w, isOpen: true, zIndex: z } : w));
       }
       return prev;
     });
@@ -97,7 +102,7 @@ export default function Home() {
   };
 
   return (
-    <Desktop>
+    <Desktop className="h-full min-h-0">
       <FileTreeNav onSelect={openWindow} />
       {windows.map((win) => (
         <Window

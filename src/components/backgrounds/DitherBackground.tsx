@@ -310,10 +310,10 @@ export function DitherBackground({
     waveColor = [0.5, 0.5, 0.5],
     colorIntensity = 5.7,
     colorNum = 4,
-    pixelSize = 2,
+    pixelSize = 3,
     disableAnimation = true,
     enableMouseInteraction = true,
-    mouseRadius = 0.2
+    mouseRadius = 0.4
 }: DitherBackgroundProps) {
     // Apply color intensity as a multiplier to the waveColor
     const intensifiedColor: [number, number, number] = [
@@ -323,7 +323,7 @@ export function DitherBackground({
     ];
 
     return (
-        <div className={`fixed inset-0 z-1 ${className || ''}`}>
+        <div className={`fixed inset-0 z-1 opacity-80 ${className || ''}`}>
             <Canvas
                 className="w-full h-full pointer-events-auto"
                 camera={{ position: [0, 0, 6] }}
