@@ -110,7 +110,10 @@ export function DesktopHome() {
 
     return (
         <Desktop className="min-h-0 h-dvh max-h-dvh overflow-hidden">
-            <FileTreeNav onSelect={openWindow} />
+            <FileTreeNav
+                onSelect={openWindow}
+                openWindowIds={windows.filter((w) => w.isOpen).map((w) => w.id)}
+            />
             {windows.map((win) => (
                 <Window
                     key={win.id}
