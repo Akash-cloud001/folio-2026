@@ -40,3 +40,7 @@ export const siteConfig = {
 } as const;
 
 export const contactMailto = `mailto:${siteConfig.email}`;
+
+/** Google Analytics 4 — override with NEXT_PUBLIC_GA_MEASUREMENT_ID */
+export const GA_MEASUREMENT_ID =
+    process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ?? 'G-ETPND6JE72';
