@@ -102,7 +102,7 @@ export default function Home() {
   };
 
   return (
-    <Desktop className="h-full min-h-0">
+    <Desktop className="min-h-0 h-dvh max-h-dvh overflow-hidden">
       <FileTreeNav onSelect={openWindow} />
       {windows.map((win) => (
         <Window

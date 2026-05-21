@@ -1,15 +1,32 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
-import { listCaseStudies } from '@/data/case-studies';
 
 export const metadata: Metadata = {
     title: 'Case studies',
     description: 'Selected project case studies — My Forex Firms, Nestingo, and more.',
 };
 
-export default function CaseStudiesIndexPage() {
-    const studies = listCaseStudies();
+/** Add an entry when you create `src/app/case-studies/<slug>/page.tsx`. */
+const CASE_STUDIES = [
+    {
+        slug: 'my-forex-firms',
+        title: 'My Forex Firms',
+        tagline:
+            'CTO & lead developer on a trust-first prop trading platform — product engineering with SEO and backend partners.',
+        year: '2026',
+        role: 'CTO · Lead Developer',
+    },
+    {
+        slug: 'nestingo',
+        title: 'Nestingo',
+        tagline:
+            'CTO on a tech-driven student accommodation ecosystem in Delhi NCR — discovery, operations, and admin infrastructure.',
+        year: '2024',
+        role: 'CTO',
+    },
+] as const;
 
+export default function CaseStudiesIndexPage() {
     return (
         <div>
             <h1 className="font-geist-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500">
@@ -24,7 +41,7 @@ export default function CaseStudiesIndexPage() {
             </p>
 
             <ul className="mt-10 flex flex-col gap-3">
-                {studies.map((project) => (
+                {CASE_STUDIES.map((project) => (
                     <li key={project.slug}>
                         <Link
                             href={`/case-studies/${project.slug}`}
