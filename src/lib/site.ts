@@ -25,11 +25,16 @@ export const siteConfig = {
     email: 'akashparmar6561@gmail.com',
     jobTitle: 'Full Stack Developer',
     locale: 'en_IN',
-    twitterHandle: '@Akash_cloud001',
+    twitterHandle: '@AkashDev001',
+    social: {
+        x: 'https://x.com/AkashDev001',
+        linkedin: 'https://www.linkedin.com/in/akash-parmar-/',
+        github: 'https://github.com/Akash-cloud001',
+    },
     sameAs: [
         'https://github.com/Akash-cloud001',
         'https://www.linkedin.com/in/akash-parmar-/',
-        'https://x.com/Akash_cloud001',
+        'https://x.com/AkashDev001',
         FOLIO_2025_URL,
     ],
 } as const;

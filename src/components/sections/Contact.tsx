@@ -26,15 +26,30 @@ export function Contact() {
             <div className="space-y-4">
                 <h3 className="text-sm font-mono text-gray-500 uppercase">Socials</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <a href="#" className="flex items-center justify-between p-3 border border-white/10 hover:border-white/30 hover:bg-white/5 transition-all group">
+                    <a
+                        href={siteConfig.social.x}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-between p-3 border border-white/10 hover:border-white/30 hover:bg-white/5 transition-all group"
+                    >
                         <span className="font-mono text-sm text-gray-400 group-hover:text-white">TWITTER</span>
                         <ArrowUpRight size={14} className="text-gray-500 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                     </a>
-                    <a href="#" className="flex items-center justify-between p-3 border border-white/10 hover:border-white/30 hover:bg-white/5 transition-all group">
+                    <a
+                        href={siteConfig.social.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-between p-3 border border-white/10 hover:border-white/30 hover:bg-white/5 transition-all group"
+                    >
                         <span className="font-mono text-sm text-gray-400 group-hover:text-white">LINKEDIN</span>
                         <ArrowUpRight size={14} className="text-gray-500 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                     </a>
-                    <a href="#" className="flex items-center justify-between p-3 border border-white/10 hover:border-white/30 hover:bg-white/5 transition-all group">
+                    <a
+                        href={siteConfig.social.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-between p-3 border border-white/10 hover:border-white/30 hover:bg-white/5 transition-all group"
+                    >
                         <span className="font-mono text-sm text-gray-400 group-hover:text-white">GITHUB</span>
                         <ArrowUpRight size={14} className="text-gray-500 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                     </a>

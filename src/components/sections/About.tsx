@@ -6,6 +6,7 @@ import { useGitHubStore } from '@/stores/github.store';
 import { RefreshCw } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import { siteConfig } from '@/lib/site';
 import GithubIcon from '@/components/svgs/Github';
 import LinkedInIcon from '@/components/svgs/LinkedIn';
 import XIcon from '@/components/svgs/X';
@@ -145,17 +146,17 @@ export function About() {
             </div>
 
             <div className="flex justify-center gap-5 pb-1 sm:justify-start sm:gap-4 sm:pb-0">
-                <a
-                    href="https://x.com/Akash_cloud001"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex min-h-11 min-w-11 items-center justify-center touch-manipulation sm:min-h-0 sm:min-w-0 sm:p-1"
-                    aria-label="X (Twitter)"
-                >
+                    <a
+                        href={siteConfig.social.x}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex min-h-11 min-w-11 items-center justify-center touch-manipulation sm:min-h-0 sm:min-w-0 sm:p-1"
+                        aria-label="X (Twitter)"
+                    >
                     <XIcon className="h-6 w-6 text-white/80 transition-colors hover:text-white" />
                 </a>
                 <a
-                    href="https://github.com/Akash-cloud001"
+                        href={siteConfig.social.github}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex min-h-11 min-w-11 items-center justify-center touch-manipulation sm:min-h-0 sm:min-w-0 sm:p-1"
@@ -164,7 +165,7 @@ export function About() {
                     <GithubIcon className="h-6 w-6 text-white/80 transition-colors hover:text-white" />
                 </a>
                 <a
-                    href="https://www.linkedin.com/in/akash-parmar-/"
+                        href={siteConfig.social.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex min-h-11 min-w-11 items-center justify-center touch-manipulation sm:min-h-0 sm:min-w-0 sm:p-1"
