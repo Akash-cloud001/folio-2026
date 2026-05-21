@@ -3,7 +3,7 @@
 import React, { useEffect, useSyncExternalStore } from 'react';
 import { ActivityCalendar } from 'react-activity-calendar';
 import { useGitHubStore } from '@/stores/github.store';
-import { FileBadge, RefreshCw } from 'lucide-react';
+import { RefreshCw } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import GithubIcon from '@/components/svgs/Github';
@@ -144,44 +144,33 @@ export function About() {
                 )}
             </div>
 
-            <div className="flex w-full flex-col items-stretch gap-4 pb-1 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:pb-0 md:gap-6">
-                <div className="flex justify-center gap-5 sm:justify-start sm:gap-4">
-                    <a
-                        href="https://x.com/Akash_cloud001"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex min-h-11 min-w-11 items-center justify-center touch-manipulation sm:min-h-0 sm:min-w-0 sm:p-1"
-                        aria-label="X (Twitter)"
-                    >
-                        <XIcon className="h-6 w-6 text-white/80 transition-colors hover:text-white" />
-                    </a>
-                    <a
-                        href="https://github.com/Akash-cloud001"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex min-h-11 min-w-11 items-center justify-center touch-manipulation sm:min-h-0 sm:min-w-0 sm:p-1"
-                        aria-label="GitHub"
-                    >
-                        <GithubIcon className="h-6 w-6 text-white/80 transition-colors hover:text-white" />
-                    </a>
-                    <a
-                        href="https://www.linkedin.com/in/akash-parmar-/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex min-h-11 min-w-11 items-center justify-center touch-manipulation sm:min-h-0 sm:min-w-0 sm:p-1"
-                        aria-label="LinkedIn"
-                    >
-                        <LinkedInIcon className="h-6 w-6 text-white/80 transition-colors hover:text-white" />
-                    </a>
-                </div>
+            <div className="flex justify-center gap-5 pb-1 sm:justify-start sm:gap-4 sm:pb-0">
                 <a
-                    href="/resume.pdf"
+                    href="https://x.com/Akash_cloud001"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex w-full shrink-0 items-center justify-center gap-2 rounded-md bg-white px-4 py-2.5 font-mono text-sm text-black touch-manipulation sm:w-auto sm:px-5 sm:py-2"
+                    className="inline-flex min-h-11 min-w-11 items-center justify-center touch-manipulation sm:min-h-0 sm:min-w-0 sm:p-1"
+                    aria-label="X (Twitter)"
                 >
-                    <FileBadge className="h-4 w-4 shrink-0 text-black" />
-                    Resume / CV
+                    <XIcon className="h-6 w-6 text-white/80 transition-colors hover:text-white" />
+                </a>
+                <a
+                    href="https://github.com/Akash-cloud001"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex min-h-11 min-w-11 items-center justify-center touch-manipulation sm:min-h-0 sm:min-w-0 sm:p-1"
+                    aria-label="GitHub"
+                >
+                    <GithubIcon className="h-6 w-6 text-white/80 transition-colors hover:text-white" />
+                </a>
+                <a
+                    href="https://www.linkedin.com/in/akash-parmar-/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex min-h-11 min-w-11 items-center justify-center touch-manipulation sm:min-h-0 sm:min-w-0 sm:p-1"
+                    aria-label="LinkedIn"
+                >
+                    <LinkedInIcon className="h-6 w-6 text-white/80 transition-colors hover:text-white" />
                 </a>
             </div>
         </div>
