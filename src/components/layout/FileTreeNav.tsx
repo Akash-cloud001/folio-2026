@@ -47,6 +47,12 @@ export function FileTreeNav({ onSelect, className }: FileTreeNavProps) {
                     </File>
                 </Folder>
                 <Folder value="case-studies" element="case-studies">
+                    <File
+                        value="case-study-folio-2026"
+                        onClick={() => router.push('/case-studies/folio-2026')}
+                    >
+                        <p>folio-2026.md</p>
+                    </File>
                     <File value="case-study-tradzu" onClick={() => router.push('/case-studies/tradzu')}>
                         <p>tradzu.md</p>
                     </File>

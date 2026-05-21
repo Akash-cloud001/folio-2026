@@ -17,6 +17,8 @@ interface WindowProps {
     onFocus: () => void;
     defaultPosition?: { x: number; y: number };
     className?: string;
+    /** Smaller chrome for widget-style panels (e.g. Folio-2025 card). */
+    compact?: boolean;
 }
 
 export function Window({
@@ -30,6 +32,7 @@ export function Window({
     onFocus,
     defaultPosition = { x: 0, y: 0 },
     className,
+    compact = false,
 }: WindowProps) {
     const dragControls = useDragControls();
     const dragBoundsRef = useDesktopDragBounds();
@@ -76,7 +79,9 @@ export function Window({
                         'flex flex-col overflow-hidden rounded-lg border border-accent bg-black/95 shadow-2xl backdrop-blur-sm',
                         isMobile
                             ? 'left-[5vw] top-[max(0.5rem,env(safe-area-inset-top,0px))] h-auto max-h-[min(calc(100dvh-env(safe-area-inset-top)-env(safe-area-inset-bottom)-0.75rem),92dvh)] w-[90vw] min-h-0'
-                            : 'min-h-0 min-w-[400px] max-h-[min(calc(100dvh-1.5rem),96dvh)] max-w-[99vw]',
+                            : compact
+                              ? 'h-auto min-h-0 w-[min(calc(100vw-2rem),240px)] min-w-0 max-w-[240px] max-h-[min(calc(100dvh-1.5rem),96dvh)]'
+                              : 'min-h-0 min-w-[400px] max-h-[min(calc(100dvh-1.5rem),96dvh)] max-w-[99vw]',
                         className
                     )}
                 >
@@ -100,7 +105,9 @@ export function Window({
                             'relative min-h-0 p-2 custom-scrollbar',
                             isMobile
                                 ? 'max-h-[calc(100dvh-env(safe-area-inset-top)-env(safe-area-inset-bottom)-3.25rem)] overflow-y-auto overflow-x-hidden'
-                                : 'flex-1 overflow-auto'
+                                : compact
+                                  ? 'overflow-hidden p-0'
+                                  : 'flex-1 overflow-auto'
                         )}
                     >
                         {/* Scanline effect overlay (optional, low opacity) */}

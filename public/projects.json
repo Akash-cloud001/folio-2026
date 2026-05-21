@@ -34,6 +34,24 @@
       "smallDesc": "Loyalty and rewards infrastructure for traders — earn TZU Credits on prop purchases and redeem in the marketplace."
     },
     {
+      "id": "portfolio-2026",
+      "name": "Portfolio 2026",
+      "url": "/case-studies/folio-2026",
+      "imgUrl": "/projects/folio-2026/landng-page.png",
+      "tech": [
+        "Next.js 16",
+        "React 19",
+        "TypeScript",
+        "React Three Fiber",
+        "Framer Motion",
+        "Tailwind CSS",
+        "Zustand",
+        "shadcn/ui"
+      ],
+      "desc": "Portfolio 2026 is a desktop-inspired developer portfolio — draggable windows, IDE-style file-tree navigation, a WebGL dither background, live GitHub activity, and dedicated case study routes. Built as an interactive OS-style shell rather than a linear scroll template.",
+      "smallDesc": "OS-style interactive portfolio with windows, file tree nav, WebGL desktop, and page-driven case studies."
+    },
+    {
       "id": "vetking-website-01",
       "name": "VetKing Life",
       "url": "https://vetking-life-science.vercel.app/",

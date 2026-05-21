@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Desktop } from '@/components/layout/Desktop';
 import { Window } from '@/components/ui/Window';
 import { FileTreeNav } from '@/components/layout/FileTreeNav';
-import { Hero } from '@/components/sections/Hero';
+import { Folio2025Card } from '@/components/layout/Folio2025Card';
 import { About } from '@/components/sections/About';
 import { Projects } from '@/components/sections/Projects';
 import { Experience } from '@/components/sections/Experience';
@@ -63,6 +63,17 @@ export default function Home() {
       defaultPosition: { x: 8, y: typeof window !== 'undefined' ? window.innerHeight - 150 : 600 }
     },
     {
+      id: 'folio-2025',
+      title: 'FOLIO-2025.url',
+      isOpen: true,
+      zIndex: 2,
+      component: <Folio2025Card />,
+      defaultPosition: {
+        x: typeof window !== 'undefined' ? Math.max(16, window.innerWidth - 248) : 16,
+        y: typeof window !== 'undefined' ? Math.max(16, window.innerHeight - 390) : 400,
+      },
+    },
+    {
       id: 'contact',
       title: 'CONTACT.msg',
       isOpen: false,
@@ -115,6 +126,8 @@ export default function Home() {
           onMinimize={() => closeWindow(win.id)}
           onFocus={() => bringToFront(win.id)}
           defaultPosition={win.defaultPosition}
+          compact={win.id === 'folio-2025'}
+          className={win.id === 'folio-2025' ? 'hidden md:flex' : undefined}
         >
           {win.component}
         </Window>
