@@ -2,9 +2,11 @@
 
 import { ArrowUpRight } from 'lucide-react';
 
+import { FOLIO_2025_URL } from '@/lib/site';
+
 const FOLIO_2025 = {
     title: 'Folio-2025',
-    url: 'https://akash-codes.in',
+    url: FOLIO_2025_URL,
     imgUrl: '/projects/pro-3.jpeg',
     smallDesc: '3D portfolio site with immersive visuals and smooth animations. Built using R3F & Drei.',
 };

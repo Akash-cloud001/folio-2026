@@ -14,7 +14,7 @@ Folio 2026 is an interactive developer portfolio that mimics a desktop operating
 
 A parallel **case study** area uses standard Next.js App Router pages (article layout, server metadata, crawlable HTML) for long-form CTO/project write-ups.
 
-**Prior portfolio:** Folio 2025 lives at [akash-codes.in](https://akash-codes.in), surfaced on the desktop via `FOLIO-2025.url` (video preview window).
+**Prior portfolio:** Folio 2025 lives at [2025.akash-codes.in](https://2025.akash-codes.in/), surfaced on the desktop via `FOLIO-2025.url` (video preview window).
 
 ---
 

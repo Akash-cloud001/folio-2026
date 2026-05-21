@@ -1,6 +1,10 @@
-/** Canonical site URL — override with NEXT_PUBLIC_SITE_URL in production. */
-export const SITE_URL =
-    process.env.NEXT_PUBLIC_SITE_URL ?? 'https://akash-codes.in/';
+/** Canonical URL for this site (Folio 2026) — override with NEXT_PUBLIC_SITE_URL. */
+export const SITE_URL = (
+    process.env.NEXT_PUBLIC_SITE_URL ?? 'https://akash-codes.in'
+).replace(/\/$/, '');
+
+/** Last year's portfolio — desktop `FOLIO-2025.url` window & projects carousel. */
+export const FOLIO_2025_URL = 'https://2025.akash-codes.in';
 
 export const CASE_STUDY_SLUGS = [
     'folio-2026',
@@ -26,5 +30,6 @@ export const siteConfig = {
         'https://github.com/Akash-cloud001',
         'https://www.linkedin.com/in/akash-parmar-/',
         'https://x.com/Akash_cloud001',
+        FOLIO_2025_URL,
     ],
 } as const;

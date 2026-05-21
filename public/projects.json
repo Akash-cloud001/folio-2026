@@ -36,7 +36,7 @@
     {
       "id": "portfolio-2026",
       "name": "Portfolio 2026",
-      "url": "/case-studies/folio-2026",
+      "url": "https://akash-codes.in",
       "imgUrl": "/projects/folio-2026/landng-page.png",
       "tech": [
         "Next.js 16",
@@ -83,7 +83,7 @@
     {
       "id": "akash-portfolio",
       "name": "Akash Folio",
-      "url": "https://akash-codes.in",
+      "url": "https://2025.akash-codes.in",
       "imgUrl": "/projects/pro-3.jpeg",
       "tech": [
         "react",
