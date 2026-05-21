@@ -24,7 +24,7 @@ export function FileTreeNav({ onSelect, className }: FileTreeNavProps) {
             dragMomentum={false}
             initial={{ x: 20, y: 20 }}
             className={cn(
-                'absolute z-[1] w-fit min-w-[200px] cursor-grab rounded-lg border border-white/20 bg-black/80 p-4 shadow-2xl backdrop-blur-md active:cursor-grabbing touch-manipulation',
+                'pointer-events-auto absolute z-[1] w-fit min-w-[200px] cursor-grab rounded-lg border border-white/20 bg-black/80 p-4 shadow-2xl backdrop-blur-md active:cursor-grabbing touch-manipulation',
                 className
             )}
         >

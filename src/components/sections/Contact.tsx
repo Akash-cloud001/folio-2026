@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { ArrowUpRight, Mail } from 'lucide-react';
+import { contactMailto, siteConfig } from '@/lib/site';
 
 export function Contact() {
     return (
@@ -9,16 +10,16 @@ export function Contact() {
             <div>
                 <h2 className="text-xl font-bold border-b border-white/10 pb-2 mb-4">CONTACT_ME</h2>
                 <p className="text-gray-300 font-sans mb-6">
-                    I'm currently available for freelance work and open to full-time opportunities.
-                    If you have a project that needs some creative direction, I'd love to hear from you.
+                    I&apos;m currently available for freelance work and open to full-time opportunities.
+                    If you have a project that needs some creative direction, I&apos;d love to hear from you.
                 </p>
 
                 <a
-                    href="mailto:hello@akashparmar.dev"
+                    href={contactMailto}
                     className="inline-flex items-center gap-2 px-4 py-2 bg-white text-black font-mono text-sm hover:bg-gray-200 transition-colors"
                 >
                     <Mail size={14} />
-                    HELLO@AKASHPARMAR.DEV
+                    {siteConfig.email.toUpperCase()}
                 </a>
             </div>
 

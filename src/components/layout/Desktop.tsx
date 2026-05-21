@@ -29,7 +29,7 @@ export function Desktop({ children, className, bottomBar }: DesktopProps) {
             <DesktopDragBoundsContext.Provider value={dragBoundsRef}>
                 <div
                     ref={dragBoundsRef}
-                    className="relative h-full min-h-0 w-full min-w-0 flex-1 overflow-hidden"
+                    className="pointer-events-none relative z-10 h-full min-h-0 w-full min-w-0 flex-1 overflow-hidden"
                 >
                     {children}
                 </div>

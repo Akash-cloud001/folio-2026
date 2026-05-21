@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import type { CaseStudyContent } from '@/components/case-studies/types';
 import { CaseStudyView } from '@/components/case-studies/detailed-case-study';
+import { contactMailto } from '@/lib/site';
 
 export const metadata: Metadata = {
     title: 'Nestingo — CTO & Startup Technology Case Study',
@@ -257,7 +258,7 @@ const study: CaseStudyContent = {
             description:
                 'I architect multi-platform startups, scale engineering teams, and ship the internal tooling that offline industries need to run digitally.',
             primaryCta: 'Let’s Work Together',
-            primaryCtaHref: 'mailto:hello@akashparmar.dev',
+            primaryCtaHref: contactMailto,
             secondaryCta: 'View More Projects',
             secondaryCtaHref: '/case-studies',
         },

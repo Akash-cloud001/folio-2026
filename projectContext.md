@@ -4,7 +4,7 @@
 
 **Owner:** Akash Parmar — Full Stack Developer (India)
 
-**Contact (intended):** hello@akashparmar.dev · GitHub `Akash-cloud001` · LinkedIn / X linked from About
+**Contact:** akashparmar6561@gmail.com · GitHub `Akash-cloud001` · LinkedIn / X linked from About
 
 ---
 

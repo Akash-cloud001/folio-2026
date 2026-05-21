@@ -70,13 +70,11 @@ export function Window({
                     animate={{
                         opacity: 1,
                         scale: 1,
-                        // We let drag handle x/y after mount, so we don't force animate them here 
-                        // to allow free movement. 
                     }}
                     exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.15 } }}
                     style={{ zIndex, position: 'absolute' }}
                     className={cn(
-                        'flex flex-col overflow-hidden rounded-lg border border-accent bg-black/95 shadow-2xl backdrop-blur-sm',
+                        'pointer-events-auto flex flex-col overflow-hidden rounded-lg border border-accent bg-black/95 shadow-2xl backdrop-blur-sm',
                         isMobile
                             ? 'left-[5vw] top-[max(0.5rem,env(safe-area-inset-top,0px))] h-auto max-h-[min(calc(100dvh-env(safe-area-inset-top)-env(safe-area-inset-bottom)-0.75rem),92dvh)] w-[90vw] min-h-0'
                             : compact

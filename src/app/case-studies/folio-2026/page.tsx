@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import type { CaseStudyContent } from '@/components/case-studies/types';
 import { CaseStudyView } from '@/components/case-studies/detailed-case-study';
+import { contactMailto } from '@/lib/site';
 
 export const metadata: Metadata = {
     title: 'Folio 2026 — Interactive Developer Portfolio Case Study',
@@ -251,7 +252,7 @@ const study: CaseStudyContent = {
             description:
                 'I design and build distinctive frontend systems — from gamified fintech to desktop-grade portfolios and scalable case study infrastructure.',
             primaryCta: 'Get in touch',
-            primaryCtaHref: 'mailto:hello@akashparmar.dev',
+            primaryCtaHref: contactMailto,
             secondaryCta: 'Back to desktop',
             secondaryCtaHref: '/',
         },

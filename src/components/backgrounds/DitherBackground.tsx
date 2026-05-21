@@ -2,7 +2,7 @@
 'use client';
 
 import { useRef, useState, useEffect, forwardRef } from 'react';
-import { Canvas, useFrame, useThree, ThreeEvent } from '@react-three/fiber';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { EffectComposer, wrapEffect } from '@react-three/postprocessing';
 import { Effect } from 'postprocessing';
 import * as THREE from 'three';
@@ -228,6 +228,20 @@ function DitheredWaves({
         }
     }, [size, gl]);
 
+    /** UI layers sit above the canvas — track pointer on window so waves still react. */
+    useEffect(() => {
+        if (!enableMouseInteraction) return;
+
+        const onPointerMove = (e: PointerEvent) => {
+            const rect = gl.domElement.getBoundingClientRect();
+            const dpr = gl.getPixelRatio();
+            mouseRef.current.set((e.clientX - rect.left) * dpr, (e.clientY - rect.top) * dpr);
+        };
+
+        window.addEventListener('pointermove', onPointerMove, { passive: true });
+        return () => window.removeEventListener('pointermove', onPointerMove);
+    }, [enableMouseInteraction, gl]);
+
     const prevColor = useRef([...waveColor]);
     useFrame(({ clock }) => {
         const u = waveUniformsRef.current;
@@ -253,13 +267,6 @@ function DitheredWaves({
         }
     });
 
-    const handlePointerMove = (e: ThreeEvent<PointerEvent>) => {
-        if (!enableMouseInteraction) return;
-        const rect = gl.domElement.getBoundingClientRect();
-        const dpr = gl.getPixelRatio();
-        mouseRef.current.set((e.clientX - rect.left) * dpr, (e.clientY - rect.top) * dpr);
-    };
-
     return (
         <>
             <mesh ref={mesh} scale={[viewport.width, viewport.height, 1]}>
@@ -274,16 +281,6 @@ function DitheredWaves({
             <EffectComposer>
                 <RetroEffect colorNum={colorNum} pixelSize={pixelSize} />
             </EffectComposer>
-
-            <mesh
-                onPointerMove={handlePointerMove}
-                position={[0, 0, 0.01]}
-                scale={[viewport.width, viewport.height, 1]}
-                visible={false}
-            >
-                <planeGeometry args={[1, 1]} />
-                <meshBasicMaterial transparent opacity={0} />
-            </mesh>
         </>
     );
 }
@@ -311,7 +308,7 @@ export function DitherBackground({
     colorIntensity = 5.7,
     colorNum = 4,
     pixelSize = 3,
-    disableAnimation = true,
+    disableAnimation = false,
     enableMouseInteraction = true,
     mouseRadius = 0.4
 }: DitherBackgroundProps) {
@@ -323,9 +320,9 @@ export function DitherBackground({
     ];
 
     return (
-        <div className={`fixed inset-0 z-1 opacity-80 ${className || ''}`}>
+        <div className={`pointer-events-none fixed inset-0 z-0 opacity-80 ${className || ''}`}>
             <Canvas
-                className="w-full h-full pointer-events-auto"
+                className="h-full w-full"
                 camera={{ position: [0, 0, 6] }}
                 dpr={1}
                 gl={{ antialias: true, preserveDrawingBuffer: true }}

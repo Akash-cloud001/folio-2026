@@ -22,7 +22,7 @@ export const siteConfig = {
         'Full stack developer portfolio — interactive desktop UI, Next.js, React, WebGL, and CTO case studies for Tradzu, MyForexFirms, and Nestingo.',
     ogImagePath: '/og.png',
     ogImageAlt: 'Akash Parmar — Portfolio 2026',
-    email: 'hello@akashparmar.dev',
+    email: 'akashparmar6561@gmail.com',
     jobTitle: 'Full Stack Developer',
     locale: 'en_IN',
     twitterHandle: '@Akash_cloud001',
@@ -33,3 +33,5 @@ export const siteConfig = {
         FOLIO_2025_URL,
     ],
 } as const;
+
+export const contactMailto = `mailto:${siteConfig.email}`;

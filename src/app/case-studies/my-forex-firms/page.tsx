@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import type { CaseStudyContent } from '@/components/case-studies/types';
 import { CaseStudyView } from '@/components/case-studies/detailed-case-study';
+import { contactMailto } from '@/lib/site';
 
 export const metadata: Metadata = {
     title: 'MyForexFirms — CTO & Engineering Case Study',
@@ -210,7 +211,7 @@ const study: CaseStudyContent = {
             description:
                 'I lead technical direction, ship production frontend, and scale delivery with the right partners — SEO, backend, or otherwise — without losing architecture quality.',
             primaryCta: 'Let’s Work Together',
-            primaryCtaHref: 'mailto:hello@akashparmar.dev',
+            primaryCtaHref: contactMailto,
             secondaryCta: 'View More Projects',
             secondaryCtaHref: '/case-studies',
         },

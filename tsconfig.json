@@ -30,5 +30,5 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts"
   ],
-  "exclude": ["node_modules", "docs", "docs/ai", ".ai", ".ai-temp"]
+  "exclude": ["node_modules", "docs", "docs/ai", ".ai", ".ai-temp", "public/loader-component"]
 }
