@@ -26,7 +26,7 @@ const study: CaseStudyContent = {
     client: 'MyForexFirms',
     duration: '6+ Months',
     categories: ['Product', 'Engineering', 'Frontend', 'Architecture', 'Team Leadership'],
-    coverImage: '/projects/myforexfirms/product-design.png',
+    coverImage: '/projects/myforexfirms.png',
     sections: [
         {
             type: 'hero',

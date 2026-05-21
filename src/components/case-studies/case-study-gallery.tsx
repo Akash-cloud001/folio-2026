@@ -42,7 +42,7 @@ export function CaseStudyGallery({ title, images, layout }: CaseStudyGalleryProp
         <section className="mt-16 border-t border-white/10 pt-14">
             <p className="font-geist-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500">{title}</p>
 
-            <div className="relative mt-8 w-full px-10 sm:px-12">
+            <div className="relative mt-8 w-full ">
                 <Carousel
                     opts={{
                         align: 'start',

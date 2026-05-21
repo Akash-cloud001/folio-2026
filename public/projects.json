@@ -3,7 +3,7 @@
     {
       "id": "myforexfirms-platform-01",
       "name": "MyForexFirms",
-      "url": "https://myforexfirms.com",
+      "url": "https://myforexfirms.in",
       "imgUrl": "/projects/myforexfirms.png",
       "tech": [
         "Next.js",
@@ -16,6 +16,22 @@
       ],
       "desc": "MyForexFirms is a full-scale SaaS platform built for the prop-trading ecosystem, allowing users to discover, compare, and manage forex prop firms in one place. The platform focuses on real-time data updates, scalable backend architecture, and a clean, performance-driven UI. Built with modern web technologies and AI-assisted development workflows, MyForexFirms emphasizes reliability, speed, and an intuitive user experience for traders and admins alike.",
       "smallDesc": "SaaS platform for discovering and managing forex prop firms with real-time updates."
+    },
+    {
+      "id": "tradzu-platform-01",
+      "name": "Tradzu",
+      "url": "https://tradzu.com",
+      "imgUrl": "/projects/tradzu/lading-page.png",
+      "tech": [
+        "Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Ledger Accounting",
+        "Marketplace",
+        "Design Tokens"
+      ],
+      "desc": "Tradzu is a gamified trading rewards ecosystem for prop-firm traders — TZU Credits, prop-firm discovery, broker integrations, and a marketplace for redeeming rewards. Built with ledger-based accounting, snapshot approvals, admin operations, and a dark fintech UI tailored for modern trading audiences.",
+      "smallDesc": "Loyalty and rewards infrastructure for traders — earn TZU Credits on prop purchases and redeem in the marketplace."
     },
     {
       "id": "vetking-website-01",

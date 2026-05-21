@@ -353,14 +353,14 @@ export function CaseStudyView({ study }: { study: CaseStudyContent }) {
                 <span className="text-zinc-400">{study.title}</span>
             </nav>
 
-            <div className="relative mt-6 aspect-[21/9] max-h-[min(40vh,320px)] w-full overflow-hidden rounded-xl border border-white/10 bg-zinc-900/50">
+            <div className="relative mt-6 aspect-[21/9] max-h-[min(70vh,500px)] w-full overflow-hidden rounded-xl border border-white/10 bg-zinc-900/50">
                 <Image
                     src={study.coverImage}
                     alt={`${study.title} cover`}
                     fill
                     priority
                     sizes="(max-width: 768px) 100vw, min(896px, 100vw)"
-                    className="object-cover object-center"
+                    className="object-cover object-top"
                 />
             </div>
 

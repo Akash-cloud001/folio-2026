@@ -32,7 +32,7 @@ const study: CaseStudyContent = {
         'Multi-platform Systems',
         'Startup Execution',
     ],
-    coverImage: '/projects/nestingo/landing-2.png',
+    coverImage: '/projects/nestingo.png',
     sections: [
         {
             type: 'hero',
