@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useSyncExternalStore } from 'react';
 import { Desktop } from '@/components/layout/Desktop';
 import { Window } from '@/components/ui/Window';
 import { FileTreeNav } from '@/components/layout/FileTreeNav';
@@ -29,7 +29,26 @@ function nextWindowZIndex(prev: WindowState[]): number {
     return Math.min(maxZ + 1, MAX_WINDOW_Z);
 }
 
+/** Match Tailwind `md` (768px). */
+function useIsMobile() {
+    return useSyncExternalStore(
+        (onStoreChange) => {
+            if (typeof window === 'undefined') return () => {};
+            const mq = window.matchMedia('(max-width: 767px)');
+            mq.addEventListener('change', onStoreChange);
+            return () => mq.removeEventListener('change', onStoreChange);
+        },
+        () =>
+            typeof window !== 'undefined' &&
+            window.matchMedia('(max-width: 767px)').matches,
+        () => false
+    );
+}
+
+const MOBILE_WINDOW_X = 8;
+
 export function DesktopHome() {
+    const isMobile = useIsMobile();
     const [windows, setWindows] = useState<WindowState[]>([
         {
             id: 'about',
@@ -124,7 +143,10 @@ export function DesktopHome() {
                     onClose={() => closeWindow(win.id)}
                     onMinimize={() => closeWindow(win.id)}
                     onFocus={() => bringToFront(win.id)}
-                    defaultPosition={win.defaultPosition}
+                    defaultPosition={{
+                        x: isMobile ? MOBILE_WINDOW_X : win.defaultPosition.x,
+                        y: win.defaultPosition.y,
+                    }}
                     compact={win.id === 'folio-2025'}
                     className={win.id === 'folio-2025' ? 'hidden md:flex' : undefined}
                 >

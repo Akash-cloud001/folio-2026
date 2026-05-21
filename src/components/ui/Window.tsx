@@ -76,7 +76,7 @@ export function Window({
                     className={cn(
                         'pointer-events-auto flex flex-col overflow-hidden rounded-lg border border-accent bg-black/95 shadow-2xl backdrop-blur-sm',
                         isMobile
-                            ? 'left-[5vw] top-[max(0.5rem,env(safe-area-inset-top,0px))] h-auto max-h-[min(calc(100dvh-env(safe-area-inset-top)-env(safe-area-inset-bottom)-0.75rem),80dvh)] w-[90vw] min-h-0'
+                            ? 'left-0 top-[max(0.5rem,env(safe-area-inset-top,0px))] h-auto max-h-[min(calc(100dvh-env(safe-area-inset-top)-env(safe-area-inset-bottom)-0.75rem),80dvh)] w-[calc(100vw-1rem)] min-h-0'
                             : compact
                               ? 'h-auto min-h-0 w-[min(calc(100vw-2rem),240px)] min-w-0 max-w-[240px] max-h-[80dvh]'
                               : 'min-h-0 min-w-[400px] max-h-[80dvh] max-w-[99vw]',
