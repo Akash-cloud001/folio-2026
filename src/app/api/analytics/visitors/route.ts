@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server';
 import { fetchVisitorCount } from '@/services/analytics.service';
 
-export const revalidate = 3600;
+/** Never prerender at build — credentials exist only at runtime on Vercel. */
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
     try {
