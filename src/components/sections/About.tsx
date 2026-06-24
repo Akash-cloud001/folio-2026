@@ -105,7 +105,7 @@ export function About() {
                             title="Toggle avatar source"
                             aria-label="Toggle between local and GitHub profile photo"
                             onClick={toggleAvatar}
-                            className="absolute -bottom-1 -right-1 flex size-11 items-center justify-center rounded-full border-4 border-black bg-zinc-800 touch-manipulation"
+                            className="absolute -bottom-1 -right-1 flex size-8 items-center justify-center rounded-full border-4 border-black bg-zinc-800 touch-manipulation"
                         >
                             <RefreshCw className="h-3.5 w-3.5 text-white" aria-hidden />
                         </button>

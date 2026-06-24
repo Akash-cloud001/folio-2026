@@ -5,6 +5,7 @@ import { Desktop } from '@/components/layout/Desktop';
 import { Window } from '@/components/ui/Window';
 import { FileTreeNav } from '@/components/layout/FileTreeNav';
 import { Folio2025Card } from '@/components/layout/Folio2025Card';
+import { VisitorCountBadge } from '@/components/analytics/VisitorCountBadge';
 import { About } from '@/components/sections/About';
 import { Projects } from '@/components/sections/Projects';
 import { Experience } from '@/components/sections/Experience';
@@ -129,6 +130,7 @@ export function DesktopHome() {
 
     return (
         <Desktop className="min-h-0 h-dvh max-h-dvh overflow-hidden">
+            <VisitorCountBadge />
             <FileTreeNav
                 onSelect={openWindow}
                 openWindowIds={windows.filter((w) => w.isOpen).map((w) => w.id)}
