@@ -5,19 +5,21 @@ import { Desktop } from '@/components/layout/Desktop';
 import { Window } from '@/components/ui/Window';
 import { FileTreeNav } from '@/components/layout/FileTreeNav';
 import { Folio2025Card } from '@/components/layout/Folio2025Card';
+import { BackgroundSelect } from '@/components/layout/BackgroundSelect';
 import { VisitorCountBadge } from '@/components/analytics/VisitorCountBadge';
 import { About } from '@/components/sections/About';
 import { Projects } from '@/components/sections/Projects';
 import { Experience } from '@/components/sections/Experience';
 import { Contact } from '@/components/sections/Contact';
 import { Skills } from '@/components/sections/skills';
+import { useDesktopBackground } from '@/hooks/useDesktopBackground';
 
 interface WindowState {
     id: string;
     isOpen: boolean;
     zIndex: number;
     title: string;
-    component: React.ReactNode;
+    component: React.ReactNode | null;
     defaultPosition: { x: number; y: number };
 }
 
@@ -50,6 +52,7 @@ const MOBILE_WINDOW_X = 8;
 
 export function DesktopHome() {
     const isMobile = useIsMobile();
+    const [background, setBackground] = useDesktopBackground();
     const [windows, setWindows] = useState<WindowState[]>([
         {
             id: 'about',
@@ -105,6 +108,24 @@ export function DesktopHome() {
             component: <Skills />,
             defaultPosition: { x: 250, y: 250 },
         },
+        {
+            id: 'background',
+            title: 'SYS.BACKGROUND',
+            isOpen: true,
+            zIndex: MIN_WINDOW_Z + 3,
+            component: null,
+            defaultPosition: {
+                // Top-right row: [SYS.BACKGROUND] gap [SYS.VISITORS]
+                x:
+                    typeof window !== 'undefined'
+                        ? Math.max(
+                              16,
+                              window.innerWidth - 16 /* right pad */ - 152 /* visitors */ - 12 /* gap */ - 210 /* bg */
+                          )
+                        : 16,
+                y: 12,
+            },
+        },
     ]);
 
     const bringToFront = (id: string) => {
@@ -129,8 +150,15 @@ export function DesktopHome() {
     };
 
     return (
-        <Desktop className="min-h-0 h-dvh max-h-dvh overflow-hidden">
-            <VisitorCountBadge />
+        <Desktop
+            background={background}
+            className="min-h-0 h-dvh max-h-dvh overflow-hidden"
+        >
+            <div
+                className="pointer-events-none absolute right-3 z-2 sm:right-4 top-[max(0.75rem,env(safe-area-inset-top,0px))]"
+            >
+                <VisitorCountBadge className="!static !inset-auto" />
+            </div>
             <FileTreeNav
                 onSelect={openWindow}
                 openWindowIds={windows.filter((w) => w.isOpen).map((w) => w.id)}
@@ -149,10 +177,20 @@ export function DesktopHome() {
                         x: isMobile ? MOBILE_WINDOW_X : win.defaultPosition.x,
                         y: win.defaultPosition.y,
                     }}
-                    compact={win.id === 'folio-2025'}
-                    className={win.id === 'folio-2025' ? 'hidden md:flex' : undefined}
+                    compact={win.id === 'folio-2025' || win.id === 'background'}
+                    className={
+                        win.id === 'folio-2025'
+                            ? 'hidden md:flex'
+                            : win.id === 'background'
+                              ? 'hidden md:flex w-[min(calc(100vw-2rem),210px)] min-w-0 max-w-[210px]'
+                              : undefined
+                    }
                 >
-                    {win.component}
+                    {win.id === 'background' ? (
+                        <BackgroundSelect value={background} onChange={setBackground} />
+                    ) : (
+                        win.component
+                    )}
                 </Window>
             ))}
         </Desktop>

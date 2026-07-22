@@ -14,6 +14,7 @@ const FILE_TO_WINDOW: Record<string, string> = {
     experience: 'experience',
     'my-work': 'projects',
     skills: 'skills',
+    background: 'background',
 };
 
 /** Folder open/close icons for desktop window entries only. */
@@ -96,6 +97,18 @@ export function FileTreeNav({ onSelect, openWindowIds = [], className }: FileTre
                         onClick={() => onSelect('skills')}
                     >
                         <p>Skills.txt</p>
+                    </File>
+                    <File
+                        value="background"
+                        fileIcon={
+                            <WindowEntryIcon
+                                fileValue="background"
+                                openWindowIds={openWindowIds}
+                            />
+                        }
+                        onClick={() => onSelect('background')}
+                    >
+                        <p>Background.sys</p>
                     </File>
                 </Folder>
                 <Folder value="case-studies" element="case-studies">

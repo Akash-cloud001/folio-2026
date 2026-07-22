@@ -11,7 +11,7 @@ const experiences = [
         company: 'Duple IT Solutions Pvt. Ltd.',
         type: 'Full-time',
         period: 'Sep 2025 - Present',
-        duration: '5 mos',
+        duration: '',
         location: 'Mohali',
         workMode: 'On-site',
         skills: ['Next.js', 'TypeScript', 'Tailwind', 'Vercel', 'Cursor', 'Antigravity'],
