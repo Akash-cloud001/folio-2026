@@ -99,13 +99,7 @@ export function FileTreeNav({ onSelect, openWindowIds = [], className }: FileTre
                     </File>
                 </Folder>
                 <Folder value="case-studies" element="case-studies">
-                    <File
-                        value="case-study-folio-2026"
-                        fileIcon={<FileIcon className="size-4 shrink-0 text-white/80" aria-hidden />}
-                        onClick={() => router.push('/case-studies/folio-2026')}
-                    >
-                        <p>folio-2026.md</p>
-                    </File>
+                    
                     <File
                         value="case-study-tradzu"
                         fileIcon={<FileIcon className="size-4 shrink-0 text-white/80" aria-hidden />}
@@ -126,6 +120,13 @@ export function FileTreeNav({ onSelect, openWindowIds = [], className }: FileTre
                         onClick={() => router.push('/case-studies/nestingo')}
                     >
                         <p>nestingo.md</p>
+                    </File>
+                    <File
+                        value="case-study-folio-2026"
+                        fileIcon={<FileIcon className="size-4 shrink-0 text-white/80" aria-hidden />}
+                        onClick={() => router.push('/case-studies/folio-2026')}
+                    >
+                        <p>folio-2026.md</p>
                     </File>
                 </Folder>
             </Tree>

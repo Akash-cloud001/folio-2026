@@ -10,15 +10,6 @@ export const metadata: Metadata = {
 /** Add an entry when you create `src/app/case-studies/<slug>/page.tsx`. */
 const CASE_STUDIES = [
     {
-        slug: 'folio-2026',
-        title: 'Folio 2026',
-        tagline:
-            'This portfolio — desktop-inspired UI, WebGL shell, file-tree navigation, and a page-driven case study system.',
-        year: '2026',
-        role: 'Design · Frontend · Architecture',
-        coverImage: '/projects/folio-2026/landng-page.png',
-    },
-    {
         slug: 'tradzu',
         title: 'Tradzu',
         tagline:
@@ -45,6 +36,15 @@ const CASE_STUDIES = [
         role: 'CTO',
         coverImage: '/projects/nestingo.png',
     },
+    {
+        slug: 'folio-2026',
+        title: 'Folio 2026',
+        tagline:
+            'This portfolio — desktop-inspired UI, WebGL shell, file-tree navigation, and a page-driven case study system.',
+        year: '2026',
+        role: 'Design · Frontend · Architecture',
+        coverImage: '/projects/folio-2026/landng-page.png',
+    }
 ] as const;
 
 export default function CaseStudiesIndexPage() {
