@@ -1,9 +1,11 @@
 import type { Metadata } from 'next';
 import type { CaseStudyContent } from '@/components/case-studies/types';
 import { CaseStudyView } from '@/components/case-studies/detailed-case-study';
+import { buildCaseStudyMetadata } from '@/lib/seo';
 import { contactMailto } from '@/lib/site';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildCaseStudyMetadata({
+    slug: 'tradzu',
     title: 'Tradzu — CTO Case Study · Gamified Trading Rewards Ecosystem',
     description:
         'Architecting Tradzu as CTO — ledger-based TZU Credits, marketplace retention, audit-safe reward infrastructure, and a gamified fintech experience for prop traders.',
@@ -16,7 +18,9 @@ export const metadata: Metadata = {
         'marketplace',
         'Next.js',
     ],
-};
+    coverImage: '/projects/tradzu/lading-page.png',
+    coverImageAlt: 'Tradzu landing page — gamified trading rewards platform',
+});
 
 const study: CaseStudyContent = {
     slug: 'tradzu',

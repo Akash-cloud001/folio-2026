@@ -1,11 +1,21 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/lib/seo';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
     title: 'Case studies',
-    description: 'Selected project case studies — Folio 2026, Tradzu, My Forex Firms, Nestingo, and more.',
-};
+    description:
+        'Selected project case studies — Folio 2026, Tradzu, My Forex Firms, Nestingo, and more.',
+    path: '/case-studies',
+    keywords: [
+        'case studies',
+        'CTO portfolio',
+        'product engineering',
+        'Next.js projects',
+        'Akash Parmar',
+    ],
+});
 
 /** Add an entry when you create `src/app/case-studies/<slug>/page.tsx`. */
 const CASE_STUDIES = [

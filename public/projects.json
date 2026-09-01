@@ -52,20 +52,6 @@
       "smallDesc": "OS-style interactive portfolio with windows, file tree nav, WebGL desktop, and page-driven case studies."
     },
     {
-      "id": "vetking-website-01",
-      "name": "VetKing Life",
-      "url": "https://vetking-life-science.vercel.app/",
-      "imgUrl": "/projects/vetking.png",
-      "tech": [
-        "React",
-        "Tailwind CSS",
-        "Framer Motion",
-        "Cursor AI"
-      ],
-      "desc": "VetKing Life Science is a modern website designed for a veterinary-based company, showcasing its range of healthcare products and brand story. Built using AI-assisted tools like Cursor.ai, the site blends clean UI with interactive motion to present product information and company values in an engaging way.",
-      "smallDesc": "Vibe Coded website for a vet-based company to showcase products and brand story."
-    },
-    {
       "id": "sinatra-website-01",
       "name": "Sinatra",
       "url": "https://sinatra-xi.vercel.app/",
@@ -146,36 +132,6 @@
       ],
       "desc": "VR Multiservices is a premier event management platform that crafts unforgettable experiences and creates lasting brand impact. Specializing in corporate gatherings, exhibitions, brand activations, and roadshows, the platform offers comprehensive event planning solutions with strategic execution. Features include event portfolio showcase, client testimonial system, customized branding materials catalog (boards, stands, promotional items), vendor management dashboard, and ROI tracking analytics. The platform connects event organizers with clients while providing end-to-end project management tools, budget calculators, timeline tracking, and real-time collaboration features to ensure flawless event execution.",
       "smallDesc": "Premier event management platform creating unforgettable experiences through strategic planning & custom branding solutions."
-    },
-    {
-      "id": "walkbuy-platform",
-      "name": "WalkBuy",
-      "url": "https://walkbuyapp.com/",
-      "imgUrl": "/projects/pro-5.png",
-      "tech": [
-        "React",
-        "Node.js",
-        "Context API",
-        "TailwindCSS"
-      ],
-      "desc": "A revolutionary local shopping platform that bridges the gap between traditional street shops and modern digital commerce. WalkBuy enables customers to discover, browse, and preview products from nearby local businesses through an intuitive mobile app, while providing shop owners with WalkShop - a simple showcase management system. The platform promotes local economy by allowing users to search for shops, products, and offers in their vicinity, preview items digitally, then visit the physical store for personal consultation, fitting, and purchase. Features real-time inventory updates, location-based discovery, merchant dashboard, customer reviews, and seamless integration between online browsing and offline shopping experience.",
-      "smallDesc": "Discover and shop local products digitally. Bridging offline stores with online visibility."
-    },
-    {
-      "id": "prodigy-football",
-      "name": "Prodigy",
-      "url": "https://prodigyfootball.com.au/",
-      "imgUrl": "/projects/pro-4.png",
-      "tech": [
-        "React",
-        "TailwindCSS",
-        "Motion",
-        "Node.js",
-        "Stripe",
-        "Context API"
-      ],
-      "desc": "A professional football coaching platform that bridges the gap between grassroots and elite level training. The website features dynamic booking systems for private sessions, team coaching programs, and high-performance academies. Built with modern web technologies to provide seamless user experience for players, coaches, and clubs across Australia. Includes real-time scheduling, payment processing, progress tracking, and interactive training modules designed to develop well-rounded and intelligent community footballers through specialized coaching methodologies.",
-      "smallDesc": "Football coaching platform with bookings, payments, and training modules for all levels."
     },
     {
       "id": "solar-system-3d",

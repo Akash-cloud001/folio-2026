@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import type { CaseStudyContent, CaseStudySection } from '@/components/case-studies/types';
 import { CaseStudyGallery } from '@/components/case-studies/case-study-gallery';
+import { CaseStudyJsonLd } from '@/components/seo/CaseStudyJsonLd';
 
 type CaseStudyImageProps = {
     src: string;
@@ -403,6 +404,8 @@ export function CaseStudyView({ study }: { study: CaseStudyContent }) {
             ) : null}
 
             {study.sections.map((section, index) => renderSection(section, index))}
+
+            <CaseStudyJsonLd study={study} />
         </article>
     );
 }

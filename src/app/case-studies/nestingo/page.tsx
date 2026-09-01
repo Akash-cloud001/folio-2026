@@ -1,9 +1,11 @@
 import type { Metadata } from 'next';
 import type { CaseStudyContent } from '@/components/case-studies/types';
 import { CaseStudyView } from '@/components/case-studies/detailed-case-study';
+import { buildCaseStudyMetadata } from '@/lib/seo';
 import { contactMailto } from '@/lib/site';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildCaseStudyMetadata({
+    slug: 'nestingo',
     title: 'Nestingo — CTO & Startup Technology Case Study',
     description:
         'Building a tech-driven student accommodation ecosystem in Delhi NCR — product architecture, multi-platform operations, and engineering team scale as CTO.',
@@ -15,7 +17,9 @@ export const metadata: Metadata = {
         'Delhi NCR startup',
         'product architecture',
     ],
-};
+    coverImage: '/projects/nestingo/landing-2.png',
+    coverImageAlt: 'Nestingo landing page — student accommodation platform',
+});
 
 const study: CaseStudyContent = {
     slug: 'nestingo',
@@ -33,7 +37,7 @@ const study: CaseStudyContent = {
         'Multi-platform Systems',
         'Startup Execution',
     ],
-    coverImage: '/projects/nestingo.png',
+    coverImage: '/projects/nestingo/landing-2.png',
     sections: [
         {
             type: 'hero',

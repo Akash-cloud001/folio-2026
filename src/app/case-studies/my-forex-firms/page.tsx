@@ -1,9 +1,11 @@
 import type { Metadata } from 'next';
 import type { CaseStudyContent } from '@/components/case-studies/types';
 import { CaseStudyView } from '@/components/case-studies/detailed-case-study';
+import { buildCaseStudyMetadata } from '@/lib/seo';
 import { contactMailto } from '@/lib/site';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildCaseStudyMetadata({
+    slug: 'my-forex-firms',
     title: 'MyForexFirms — CTO & Engineering Case Study',
     description:
         'How MyForexFirms was built as a trust-first prop trading platform under CTO leadership — product architecture, full-stack development, and growth supported by dedicated SEO and backend partners.',
@@ -15,7 +17,9 @@ export const metadata: Metadata = {
         'MyForexFirms',
         'frontend architecture',
     ],
-};
+    coverImage: '/projects/myforexfirms/dashboard.png',
+    coverImageAlt: 'MyForexFirms dashboard — prop trading platform',
+});
 
 const study: CaseStudyContent = {
     slug: 'my-forex-firms',
@@ -27,7 +31,7 @@ const study: CaseStudyContent = {
     client: 'MyForexFirms',
     duration: '6+ Months',
     categories: ['Product', 'Engineering', 'Frontend', 'Architecture', 'Team Leadership'],
-    coverImage: '/projects/myforexfirms.png',
+    coverImage: '/projects/myforexfirms/dashboard.png',
     sections: [
         {
             type: 'hero',

@@ -1,4 +1,5 @@
 import type { MetadataRoute } from 'next';
+import { absoluteUrl } from '@/lib/seo';
 import { CASE_STUDY_SLUGS, SITE_URL } from '@/lib/site';
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -23,6 +24,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
             lastModified,
             changeFrequency: 'weekly',
             priority: 0.9,
+        },
+        {
+            url: absoluteUrl('/llms.txt'),
+            lastModified,
+            changeFrequency: 'monthly',
+            priority: 0.5,
+        },
+        {
+            url: absoluteUrl('/llms-full.txt'),
+            lastModified,
+            changeFrequency: 'monthly',
+            priority: 0.5,
         },
         ...caseStudyEntries,
     ];

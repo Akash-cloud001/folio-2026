@@ -133,9 +133,13 @@ export function DesktopBackground({ id }: { id: BackgroundId }) {
         default:
             return (
                 <DitherBackground
-                    colorIntensity={1}
+                    imageUrl="/dither-image.png"
+                    colorNum={4}
+                    pixelSize={3}
+                    ditherBias={0.2}
                     enableMouseInteraction
-                    mouseRadius={0.45}
+                    mouseRadius={0.22}
+                    distortStrength={0.35}
                 />
             );
     }

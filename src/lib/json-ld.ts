@@ -1,4 +1,5 @@
 import { CASE_STUDY_SLUGS, SITE_URL, siteConfig } from '@/lib/site';
+import { getFaqGraphNode } from '@/lib/ai-seo';
 
 export function getSiteJsonLd() {
     const personId = `${SITE_URL}/#person`;
@@ -20,9 +21,15 @@ export function getSiteJsonLd() {
                     'Next.js',
                     'React',
                     'TypeScript',
+                    'Node.js',
+                    'MongoDB',
                     'Full Stack Development',
                     'WebGL',
+                    'Three.js',
+                    'Product Architecture',
+                    'Fintech',
                 ],
+                description: siteConfig.description,
             },
             {
                 '@type': 'WebSite',
@@ -59,6 +66,7 @@ export function getSiteJsonLd() {
                     url: `${SITE_URL}/case-studies/${slug}`,
                 })),
             },
+            getFaqGraphNode(),
         ],
     };
 }

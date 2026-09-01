@@ -1,9 +1,11 @@
 import type { Metadata } from 'next';
 import type { CaseStudyContent } from '@/components/case-studies/types';
 import { CaseStudyView } from '@/components/case-studies/detailed-case-study';
+import { buildCaseStudyMetadata } from '@/lib/seo';
 import { contactMailto } from '@/lib/site';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildCaseStudyMetadata({
+    slug: 'folio-2026',
     title: 'Folio 2026 — Interactive Developer Portfolio Case Study',
     description:
         'Building a desktop-inspired developer portfolio with Next.js 16, draggable windows, WebGL backgrounds, file-tree navigation, and a scalable case-study system.',
@@ -15,7 +17,9 @@ export const metadata: Metadata = {
         'case study',
         'folio 2026',
     ],
-};
+    coverImage: '/projects/folio-2026/landng-page.png',
+    coverImageAlt: 'Folio 2026 — interactive developer portfolio desktop UI',
+});
 
 const study: CaseStudyContent = {
     slug: 'folio-2026',

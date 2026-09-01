@@ -17,7 +17,7 @@ export const BACKGROUND_OPTIONS: {
     label: string;
     hint: string;
 }[] = [
-    { id: 'dither', label: 'Dither', hint: 'Default WebGL grain' },
+    { id: 'dither', label: 'Dither', hint: 'B&W portrait + grain' },
     { id: 'liquid', label: 'Liquid Ether', hint: 'Fluid simulation' },
     { id: 'floating', label: 'Floating Lines', hint: 'Wave line field' },
     { id: 'blinds', label: 'Gradient Blinds', hint: 'Spotlight blinds' },
