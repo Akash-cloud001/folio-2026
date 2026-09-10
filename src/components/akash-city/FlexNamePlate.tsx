@@ -122,13 +122,6 @@ export const DISTRICT_FLEX_PLATES: FlexNamePlateDef[] = [
         rotationY: Math.PI,
         width: 2.35,
     },
-    {
-        id: 'flex-projects',
-        label: 'PROJECTS',
-        position: [0.0, 2.15, -15.55],
-        rotationY: Math.PI,
-        width: 2.4,
-    },
 ];
 
 export function DistrictFlexPlates() {

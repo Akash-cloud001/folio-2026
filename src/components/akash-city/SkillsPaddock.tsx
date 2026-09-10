@@ -1,6 +1,6 @@
 'use client';
 
-import { Html, useAnimations, useGLTF } from '@react-three/drei';
+import { Billboard, Text, useAnimations, useGLTF } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import {
     CapsuleCollider,
@@ -40,22 +40,48 @@ type Bounds = {
     maxZ: number;
 };
 
+/** In-scene label: depth-tested + toneMapped off so names stay readable. */
 function SkillTag({ label, height }: { label: string; height: number }) {
     const controlsEnabled = useCityStore((s) => s.controlsEnabled);
+    const width = Math.max(0.62, label.length * 0.085);
+
     if (!controlsEnabled) return null;
 
     return (
-        <Html
-            position={[0, height, 0]}
-            center
-            distanceFactor={9}
-            zIndexRange={[10, 0]}
-            style={{ pointerEvents: 'none' }}
-        >
-            <div className="whitespace-nowrap rounded-md border border-amber-200/35 bg-zinc-950/88 px-2 py-0.5 font-geist-mono text-[9px] uppercase tracking-[0.16em] text-amber-50 shadow-md backdrop-blur-sm">
-                {label}
-            </div>
-        </Html>
+        <Billboard position={[0, height, 0]} follow>
+            <mesh position={[0, 0, -0.001]}>
+                <planeGeometry args={[width, 0.24]} />
+                <meshBasicMaterial
+                    color="#0a0a0c"
+                    transparent
+                    opacity={0.94}
+                    depthTest
+                    depthWrite={false}
+                    toneMapped={false}
+                    side={THREE.DoubleSide}
+                />
+            </mesh>
+            <Text
+                position={[0, 0, 0.01]}
+                fontSize={0.11}
+                color="#ffffff"
+                anchorX="center"
+                anchorY="middle"
+                letterSpacing={0.04}
+                outlineWidth={0.008}
+                outlineColor="#0a0a0c"
+                onSync={(troika) => {
+                    const mat = troika.material as THREE.MeshBasicMaterial | undefined;
+                    if (!mat) return;
+                    mat.toneMapped = false;
+                    mat.depthTest = true;
+                    mat.depthWrite = false;
+                    mat.transparent = true;
+                }}
+            >
+                {label.toUpperCase()}
+            </Text>
+        </Billboard>
     );
 }
 

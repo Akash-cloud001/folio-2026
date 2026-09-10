@@ -1,12 +1,17 @@
 import type { NextConfig } from "next";
 import path from "path";
-import { fileURLToPath } from "url";
 
-const projectRoot = path.dirname(fileURLToPath(import.meta.url));
+const root = path.resolve(process.cwd());
 
 const nextConfig: NextConfig = {
+  // Keep tracing/file watching inside this app (parent ~/package-lock.json confuses Next).
+  outputFileTracingRoot: root,
   turbopack: {
-    root: projectRoot,
+    root,
+    resolveAlias: {
+      tailwindcss: path.join(root, "node_modules/tailwindcss"),
+      "tw-animate-css": path.join(root, "node_modules/tw-animate-css"),
+    },
   },
 };
 

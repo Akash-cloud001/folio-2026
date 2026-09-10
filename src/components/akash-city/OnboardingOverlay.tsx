@@ -35,10 +35,10 @@ export function OnboardingOverlay({
             />
 
             <div className="relative z-10 my-auto flex w-full max-w-2xl flex-col items-center gap-4">
-                <p className="font-geist-mono text-3xl uppercase tracking-widest text-white/75">
+                <p className="font-geist-mono text-sm uppercase tracking-widest text-white/75">
                     Akash City
                 </p>
-                <p className="max-w-md text-center text-sm text-white/85">
+                <p className="max-w-md text-center text-sm text-white/65 -mt-3">
                     Pick a kart to enter the city.
                 </p>
 

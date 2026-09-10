@@ -83,7 +83,7 @@ export function DesktopHome() {
         },
         {
             id: 'folio-2025',
-            title: 'FOLIO-2025.url',
+            title: 'AKASH-CITY.url',
             isOpen: true,
             zIndex: MIN_WINDOW_Z + 2,
             component: <Folio2025Card />,
