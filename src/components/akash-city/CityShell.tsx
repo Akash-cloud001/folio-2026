@@ -3,8 +3,19 @@
 import dynamic from 'next/dynamic';
 import { Leva } from 'leva';
 import Link from 'next/link';
-import { Component, type ErrorInfo, type ReactNode, useCallback, useState } from 'react';
-import type { KartId } from '@/data/akash-city/karts';
+import {
+    Component,
+    type ErrorInfo,
+    type ReactNode,
+    useCallback,
+    useEffect,
+    useState,
+} from 'react';
+import {
+    readStoredKartId,
+    writeStoredKartId,
+    type KartId,
+} from '@/data/akash-city/karts';
 import { useCityStore } from '@/components/akash-city/cityStore';
 import { ControlsHint } from '@/components/akash-city/ControlsHint';
 import { ExperienceModal } from '@/components/akash-city/ExperienceModal';
@@ -55,20 +66,40 @@ export function CityShell() {
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [gameReady, setGameReady] = useState(false);
     const [draftKartId, setDraftKartId] = useState<KartId | null>(null);
+    const [storedKartId, setStoredKartId] = useState<KartId | null>(null);
     const activeDistrict = useCityStore((s) => s.activeDistrict);
     const setControlsEnabled = useCityStore((s) => s.setControlsEnabled);
     const setSelectedKartId = useCityStore((s) => s.setSelectedKartId);
 
+    useEffect(() => {
+        const saved = readStoredKartId();
+        if (!saved) return;
+        setStoredKartId(saved);
+        setDraftKartId(saved);
+        setSelectedKartId(saved);
+    }, [setSelectedKartId]);
+
     const selectKart = (kartId: KartId) => {
         setDraftKartId(kartId);
         setSelectedKartId(kartId);
+        writeStoredKartId(kartId);
     };
 
-    const enterCity = useCallback((kartId: KartId) => {
-        setSelectedKartId(kartId);
-        setControlsEnabled(true);
-        setPhase('ready');
-    }, [setControlsEnabled, setSelectedKartId]);
+    const enterCity = useCallback(
+        (kartId: KartId) => {
+            writeStoredKartId(kartId);
+            setSelectedKartId(kartId);
+            setControlsEnabled(true);
+            setPhase('ready');
+        },
+        [setControlsEnabled, setSelectedKartId],
+    );
+
+    // Resume prior session kart once the world is ready
+    useEffect(() => {
+        if (!gameReady || !storedKartId || phase !== 'onboarding') return;
+        enterCity(storedKartId);
+    }, [gameReady, storedKartId, phase, enterCity]);
 
     if (phase === 'error') {
         return (
@@ -92,6 +123,8 @@ export function CityShell() {
         );
     }
 
+    const showOnboarding = phase === 'onboarding' && !storedKartId;
+
     return (
         <div className="relative h-dvh w-full overflow-hidden bg-[#1a2218] text-zinc-100">
             <CityErrorBoundary
@@ -109,13 +142,21 @@ export function CityShell() {
                 />
             </CityErrorBoundary>
 
-            {phase === 'onboarding' ? (
+            {showOnboarding ? (
                 <OnboardingOverlay
                     gameReady={gameReady}
                     selectedId={draftKartId}
                     onSelectKart={selectKart}
                     onEnter={enterCity}
                 />
+            ) : null}
+
+            {phase === 'onboarding' && storedKartId && !gameReady ? (
+                <div className="pointer-events-none absolute inset-0 z-40 flex items-center justify-center bg-[#1a2218]/40">
+                    <p className="font-geist-mono text-[10px] uppercase tracking-[0.2em] text-white/70">
+                        Loading your kart…
+                    </p>
+                </div>
             ) : null}
 
             {phase === 'ready' ? (

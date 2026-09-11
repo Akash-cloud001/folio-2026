@@ -20,6 +20,7 @@ type CityStore = {
     experienceNear: boolean;
     aboutOpen: boolean;
     aboutNear: boolean;
+    nearbyProject: { id: string; title: string; href: string } | null;
     setActiveDistrict: (id: CityLocationId | null) => void;
     openPanel: (id: CityLocationId) => void;
     closePanel: () => void;
@@ -35,6 +36,9 @@ type CityStore = {
     openAbout: () => void;
     closeAbout: () => void;
     setAboutNear: (near: boolean) => void;
+    setNearbyProject: (
+        project: { id: string; title: string; href: string } | null,
+    ) => void;
 };
 
 export const useCityStore = create<CityStore>((set) => ({
@@ -49,6 +53,7 @@ export const useCityStore = create<CityStore>((set) => ({
     experienceNear: false,
     aboutOpen: false,
     aboutNear: false,
+    nearbyProject: null,
     setActiveDistrict: (id) => set({ activeDistrict: id }),
     openPanel: (id) => set({ activeDistrict: id, panelOpen: true }),
     closePanel: () => set({ panelOpen: false }),
@@ -70,4 +75,5 @@ export const useCityStore = create<CityStore>((set) => ({
         set({ aboutOpen: true, experienceOpen: false, panelOpen: false }),
     closeAbout: () => set({ aboutOpen: false, controlsEnabled: true }),
     setAboutNear: (near) => set({ aboutNear: near }),
+    setNearbyProject: (project) => set({ nearbyProject: project }),
 }));

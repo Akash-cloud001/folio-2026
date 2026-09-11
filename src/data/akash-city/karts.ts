@@ -48,5 +48,31 @@ export const CITY_KART_BY_ID: Record<KartId, KartDef> = Object.fromEntries(
 
 export const DEFAULT_KART_ID: KartId = 'oobi';
 
+/** Session preference — survives reloads within the browser. */
+export const KART_STORAGE_KEY = 'akash-city-selected-kart';
+
+export function isKartId(value: string | null | undefined): value is KartId {
+    return Boolean(value && value in CITY_KART_BY_ID);
+}
+
+export function readStoredKartId(): KartId | null {
+    if (typeof window === 'undefined') return null;
+    try {
+        const raw = window.localStorage.getItem(KART_STORAGE_KEY);
+        return isKartId(raw) ? raw : null;
+    } catch {
+        return null;
+    }
+}
+
+export function writeStoredKartId(id: KartId): void {
+    if (typeof window === 'undefined') return;
+    try {
+        window.localStorage.setItem(KART_STORAGE_KEY, id);
+    } catch {
+        // Ignore quota / private-mode failures
+    }
+}
+
 /** Uniform scale so Kenney karts sit nicely on city roads */
 export const KART_MODEL_SCALE = 0.72;

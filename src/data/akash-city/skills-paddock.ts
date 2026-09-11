@@ -4,7 +4,7 @@
  */
 
 import type { PetId } from '@/data/akash-city/pets';
-import type { Vec3 } from '@/data/akash-city/layout';
+import { ROAD_SCALE, type Vec3 } from '@/data/akash-city/layout';
 import { FENCE_EDGE } from '@/data/akash-city/bounds';
 
 /** Inner grass between roads x=16..24 and z=-8..0. */
@@ -305,44 +305,119 @@ export type SkillsFencePiece = {
 
 const FOREST = '/forest/Models/GLB%20format';
 
-/** Forest fence around the skills grass (inside the road loop). */
-export function buildSkillsFence(): SkillsFencePiece[] {
-    const pieces: SkillsFencePiece[] = [];
-    const { minX, maxX, minZ, maxZ } = SKILLS_PADDOCK;
-    const step = 1.05;
-    const scale = 1.25;
+/** Skills lot is framed by roads at x=16/24 and z=-8/0. */
+const SKILLS_ROAD = {
+    westX: 16,
+    eastX: 24,
+    southZ: -8,
+    northZ: 0,
+} as const;
 
-    for (let x = minX; x <= maxX + 0.01; x += step) {
+export type SkillsFenceSideNudge = {
+    /** Move the whole side along X (N/S) or Z (E/W). */
+    shift: number;
+    /** Push the side inward (+) / outward (−) from the square edge. */
+    inset: number;
+};
+
+export type SkillsFenceConfig = {
+    /** Square center */
+    centerX: number;
+    centerZ: number;
+    /** Full side length of the square ring */
+    size: number;
+    scale: number;
+    step: number;
+    north: SkillsFenceSideNudge;
+    south: SkillsFenceSideNudge;
+    east: SkillsFenceSideNudge;
+    west: SkillsFenceSideNudge;
+};
+
+/** Tuned via Leva — keep in sync with Skills Fence panel defaults. */
+export function getDefaultSkillsFenceConfig(): SkillsFenceConfig {
+    return {
+        centerX: 20.2,
+        centerZ: -4.0,
+        size: 5.18,
+        scale: 1.25,
+        step: 1.05,
+        north: { shift: 0.5, inset: 0 },
+        south: { shift: 0.4, inset: 0 },
+        east: { shift: 0, inset: 0 },
+        west: { shift: 0, inset: 0 },
+    };
+}
+
+/**
+ * Forest fence around the skills grass.
+ * Pass a config (from Leva) to tune the square / each side independently.
+ */
+export function buildSkillsFence(
+    config: SkillsFenceConfig = getDefaultSkillsFenceConfig(),
+): SkillsFencePiece[] {
+    const pieces: SkillsFencePiece[] = [];
+    const { centerX, centerZ, size, scale, step, north, south, east, west } =
+        config;
+    const half = size / 2;
+
+    const westX = centerX - half + west.inset;
+    const eastX = centerX + half - east.inset;
+    const southZ = centerZ - half + south.inset;
+    const northZ = centerZ + half - north.inset;
+
+    const roadHalf = ROAD_SCALE * 0.5;
+    const onRoad = (x: number, z: number) =>
+        x <= SKILLS_ROAD.westX + roadHalf ||
+        x >= SKILLS_ROAD.eastX - roadHalf ||
+        z <= SKILLS_ROAD.southZ + roadHalf ||
+        z >= SKILLS_ROAD.northZ - roadHalf;
+
+    const push = (
+        id: string,
+        x: number,
+        z: number,
+        rotationY: number,
+    ) => {
+        if (onRoad(x, z)) return;
         pieces.push({
-            id: `skills-fence-n-${x.toFixed(1)}`,
+            id,
             model: `${FOREST}/fence.glb`,
-            position: [x, 0, maxZ],
-            rotationY: 0,
+            position: [x, 0, z],
+            rotationY,
             scale,
         });
-        pieces.push({
-            id: `skills-fence-s-${x.toFixed(1)}`,
-            model: `${FOREST}/fence.glb`,
-            position: [x, 0, minZ],
-            rotationY: 0,
-            scale,
-        });
+    };
+
+    // North / South — run along X
+    for (let x = westX; x <= eastX + 0.01; x += step) {
+        push(
+            `skills-fence-n-${x.toFixed(2)}`,
+            x + north.shift,
+            northZ,
+            0,
+        );
+        push(
+            `skills-fence-s-${x.toFixed(2)}`,
+            x + south.shift,
+            southZ,
+            0,
+        );
     }
-    for (let z = minZ + step; z < maxZ - 0.01; z += step) {
-        pieces.push({
-            id: `skills-fence-w-${z.toFixed(1)}`,
-            model: `${FOREST}/fence.glb`,
-            position: [minX, 0, z],
-            rotationY: Math.PI / 2,
-            scale,
-        });
-        pieces.push({
-            id: `skills-fence-e-${z.toFixed(1)}`,
-            model: `${FOREST}/fence.glb`,
-            position: [maxX, 0, z],
-            rotationY: Math.PI / 2,
-            scale,
-        });
+    // East / West — run along Z (skip corners already covered by N/S)
+    for (let z = southZ + step; z < northZ - 0.01; z += step) {
+        push(
+            `skills-fence-w-${z.toFixed(2)}`,
+            westX,
+            z + west.shift,
+            Math.PI / 2,
+        );
+        push(
+            `skills-fence-e-${z.toFixed(2)}`,
+            eastX,
+            z + east.shift,
+            Math.PI / 2,
+        );
     }
 
     return pieces;

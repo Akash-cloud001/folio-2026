@@ -321,32 +321,11 @@ function buildStones(): OutsidePiece[] {
 }
 
 /**
- * Archery section (NW forest) — Kenney Mini Forest set piece:
- * archer, targets, bow, arrows, platform, short fence edge.
+ * Archery scenery only — archer / targets / weapons live in ArcheryRange.tsx.
+ * No fencing in the clearing.
  */
 function buildArcheryRange(): OutsidePiece[] {
-    const cx = ARCHERY_CLEARING.x;
-    const cz = ARCHERY_CLEARING.z;
-    // Face south-east toward the city so you see it from the west trail
-    const facing = Math.PI * 0.25;
-
-    return [
-        forestProp('patch-dirt', cx, cz, 2.2, facing),
-        forestProp('platform', cx - 0.2, cz + 0.15, 1.35, facing),
-        forestProp('character-archer', cx - 0.35, cz + 0.35, 1.15, facing + Math.PI),
-        forestProp('weapon-bow', cx - 0.95, cz + 0.55, 1.05, facing + 0.4),
-        forestProp('weapon-arrow', cx - 1.15, cz + 0.25, 1.0, facing),
-        forestProp('weapon-arrow', cx - 1.05, cz + 0.05, 1.0, facing + 0.2),
-        // Targets downrange
-        forestProp('target', cx + 2.4, cz - 1.6, 1.35, facing + Math.PI),
-        forestProp('target', cx + 1.6, cz - 2.35, 1.2, facing + Math.PI + 0.15),
-        forestProp('flag', cx + 2.9, cz - 0.9, 1.2, facing),
-        forestProp('fence', cx - 1.8, cz - 0.4, 1.4, facing + Math.PI / 2),
-        forestProp('fence', cx - 1.8, cz + 1.0, 1.4, facing + Math.PI / 2),
-        forestProp('plant', cx + 0.9, cz + 1.5, 1.15, 0.4),
-        forestProp('plant', cx - 1.6, cz - 1.2, 1.1, 1.1),
-        forestProp('stones', cx + 0.6, cz + 1.8, 1.15, 0.7),
-    ];
+    return [];
 }
 
 function buildForestProps(): OutsidePiece[] {

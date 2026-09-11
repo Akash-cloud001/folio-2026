@@ -1,9 +1,12 @@
 'use client';
 
-import { Text, useTexture } from '@react-three/drei';
+import { Html, Text, useTexture } from '@react-three/drei';
+import { useFrame } from '@react-three/fiber';
 import { CuboidCollider, RigidBody } from '@react-three/rapier';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import * as THREE from 'three';
+import { playerWorldPos, useCityStore } from '@/components/akash-city/cityStore';
+import { SITE_URL } from '@/lib/site';
 
 export type BoardingDef = {
     id: string;
@@ -16,6 +19,8 @@ export type BoardingDef = {
     title: string;
     /** Text engraved on the ground plaque (matches map labels). */
     plaqueLabel: string;
+    /** Case study / project URL — Enter opens while on the plaque. */
+    href?: string | null;
     comingSoon?: boolean;
 };
 
@@ -43,6 +48,44 @@ function gridPos(col: number, row: number): [number, number, number] {
         0,
         GRID_ORIGIN[1] - row * ROW_STEP,
     ];
+}
+
+function plaqueWorldXZ(def: BoardingDef): {
+    x: number;
+    z: number;
+    halfW: number;
+    halfD: number;
+    yaw: number;
+} {
+    const width = def.width ?? DEFAULT_WIDTH;
+    const plateW = Math.min(width * 0.92, 2.35);
+    const plateD = 0.48;
+    const localZ = width * 0.48;
+    const yaw = def.rotationY ?? 0;
+    const s = Math.sin(yaw);
+    const c = Math.cos(yaw);
+    return {
+        x: def.position[0] + s * localZ,
+        z: def.position[2] + c * localZ,
+        halfW: plateW * 0.58,
+        halfD: plateD * 0.85,
+        yaw,
+    };
+}
+
+function isKartOnPlaque(def: BoardingDef): boolean {
+    const { x, z, halfW, halfD, yaw } = plaqueWorldXZ(def);
+    const dx = playerWorldPos.x - x;
+    const dz = playerWorldPos.z - z;
+    const c = Math.cos(yaw);
+    const s = Math.sin(yaw);
+    const localX = c * dx - s * dz;
+    const localZ = s * dx + c * dz;
+    return Math.abs(localX) <= halfW && Math.abs(localZ) <= halfD;
+}
+
+function openProjectLink(href: string) {
+    window.open(href, '_blank', 'noopener,noreferrer');
 }
 
 function BoardingScreen({
@@ -132,9 +175,15 @@ function ComingSoonBadge() {
 function EngravedNameplate({
     label,
     boardWidth,
+    showPrompt,
+    promptLabel,
+    onOpen,
 }: {
     label: string;
     boardWidth: number;
+    showPrompt: boolean;
+    promptLabel: string;
+    onOpen?: () => void;
 }) {
     const plateW = Math.min(boardWidth * 0.92, 2.35);
     const plateD = 0.48;
@@ -157,7 +206,6 @@ function EngravedNameplate({
                     metalness={0}
                 />
             </mesh>
-            {/* Flat on ground, 180° spin in-plane (no mirror) */}
             <Text
                 position={[0, 0.05, 0]}
                 rotation={[-Math.PI / 2, 0, Math.PI]}
@@ -171,6 +219,26 @@ function EngravedNameplate({
             >
                 {label}
             </Text>
+
+            {showPrompt ? (
+                <Html
+                    position={[0, 0.55, 0]}
+                    center
+                    distanceFactor={8}
+                    style={{ pointerEvents: 'none' }}
+                >
+                    <button
+                        type="button"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onOpen?.();
+                        }}
+                        className="pointer-events-auto whitespace-nowrap rounded-md border border-amber-300/40 bg-zinc-950/90 px-3 py-1.5 font-geist-mono text-[10px] uppercase tracking-[0.18em] text-amber-100 shadow-lg backdrop-blur-sm"
+                    >
+                        {promptLabel}
+                    </button>
+                </Html>
+            ) : null}
         </group>
     );
 }
@@ -180,6 +248,68 @@ function CustomBoarding({ def }: { def: BoardingDef }) {
     const height = width / ASPECT;
     const innerW = width - FRAME_THICK * 2.15;
     const innerH = height - FRAME_THICK * 2.15;
+    const [onPlaque, setOnPlaque] = useState(false);
+    const controlsEnabled = useCityStore((s) => s.controlsEnabled);
+    const setNearbyProject = useCityStore((s) => s.setNearbyProject);
+
+    const canOpen = Boolean(def.href) && !def.comingSoon;
+    // Prompt only when there is something to open (skip Akash City / no-link boards)
+    const showPrompt =
+        onPlaque && controlsEnabled && (canOpen || Boolean(def.comingSoon));
+
+    const open = () => {
+        if (!canOpen || !def.href) return;
+        openProjectLink(def.href);
+    };
+
+    useFrame(() => {
+        if (!controlsEnabled) {
+            if (onPlaque) setOnPlaque(false);
+            return;
+        }
+        const next = isKartOnPlaque(def);
+        if (next !== onPlaque) setOnPlaque(next);
+    });
+
+    useEffect(() => {
+        if (!onPlaque || !controlsEnabled) {
+            const current = useCityStore.getState().nearbyProject;
+            if (current?.id === def.id) setNearbyProject(null);
+            return;
+        }
+        if (canOpen && def.href) {
+            setNearbyProject({ id: def.id, title: def.title, href: def.href });
+        } else {
+            setNearbyProject(null);
+        }
+        return () => {
+            const current = useCityStore.getState().nearbyProject;
+            if (current?.id === def.id) setNearbyProject(null);
+        };
+    }, [
+        onPlaque,
+        controlsEnabled,
+        canOpen,
+        def.href,
+        def.id,
+        def.title,
+        setNearbyProject,
+    ]);
+
+    useEffect(() => {
+        if (!canOpen || !def.href) return;
+        const onKey = (e: KeyboardEvent) => {
+            if (e.code !== 'Enter' || e.repeat) return;
+            if (!useCityStore.getState().controlsEnabled) return;
+            if (useCityStore.getState().experienceOpen) return;
+            if (useCityStore.getState().aboutOpen) return;
+            if (useCityStore.getState().nearbyProject?.id !== def.id) return;
+            e.preventDefault();
+            openProjectLink(def.href!);
+        };
+        window.addEventListener('keydown', onKey);
+        return () => window.removeEventListener('keydown', onKey);
+    }, [canOpen, def.href, def.id]);
 
     const frameMat = useMemo(
         () =>
@@ -198,6 +328,10 @@ function CustomBoarding({ def }: { def: BoardingDef }) {
     const totalH = height + LEG_H;
     const colliderDepth = Math.max(FRAME_DEPTH * 0.5 + 0.12, 0.28);
 
+    const promptLabel = def.comingSoon
+        ? 'Coming soon'
+        : `Enter · Visit ${def.title}`;
+
     return (
         <RigidBody
             type="fixed"
@@ -207,9 +341,27 @@ function CustomBoarding({ def }: { def: BoardingDef }) {
             restitution={0}
         >
             <group rotation={[0, def.rotationY ?? 0, 0]}>
-                <EngravedNameplate label={def.plaqueLabel} boardWidth={width} />
+                <EngravedNameplate
+                    label={def.plaqueLabel}
+                    boardWidth={width}
+                    showPrompt={showPrompt}
+                    promptLabel={promptLabel}
+                    onOpen={canOpen ? open : undefined}
+                />
 
-                <group position={[0, height / 2 + LEG_H, 0]}>
+                <group
+                    position={[0, height / 2 + LEG_H, 0]}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        open();
+                    }}
+                    onPointerOver={() => {
+                        if (canOpen) document.body.style.cursor = 'pointer';
+                    }}
+                    onPointerOut={() => {
+                        document.body.style.cursor = 'auto';
+                    }}
+                >
                     <mesh
                         position={[0, railY, 0]}
                         material={frameMat}
@@ -305,7 +457,7 @@ export const PROJECT_BOARDINGS: BoardingDef[] = [
         imageUrl: '/projects/nexetro.png',
         position: gridPos(0, 0),
         width: DEFAULT_WIDTH,
-        comingSoon: true,
+        href: 'https://nexetro.com',
     },
     {
         id: 'board-mff',
@@ -314,6 +466,7 @@ export const PROJECT_BOARDINGS: BoardingDef[] = [
         imageUrl: '/projects/myforexfirms.png',
         position: gridPos(1, 0),
         width: DEFAULT_WIDTH,
+        href: 'https://myforexfirms.in',
     },
     {
         id: 'board-tradzu',
@@ -322,6 +475,7 @@ export const PROJECT_BOARDINGS: BoardingDef[] = [
         imageUrl: '/projects/tradzu/lading-page.png',
         position: gridPos(2, 0),
         width: DEFAULT_WIDTH,
+        href: 'https://tradzu.com',
     },
     {
         id: 'board-nestingo',
@@ -330,6 +484,7 @@ export const PROJECT_BOARDINGS: BoardingDef[] = [
         imageUrl: '/projects/nestingo.png',
         position: gridPos(0, 1),
         width: DEFAULT_WIDTH,
+        href: 'https://nestingo.in',
     },
     {
         id: 'board-folio',
@@ -338,6 +493,7 @@ export const PROJECT_BOARDINGS: BoardingDef[] = [
         imageUrl: '/projects/folio-2026/landng-page.png',
         position: gridPos(1, 1),
         width: DEFAULT_WIDTH,
+        href: SITE_URL,
     },
     {
         id: 'board-akash-city',
@@ -346,6 +502,7 @@ export const PROJECT_BOARDINGS: BoardingDef[] = [
         imageUrl: '/projects/akash-city.png',
         position: gridPos(2, 1),
         width: DEFAULT_WIDTH,
+        href: null,
     },
 ];
 

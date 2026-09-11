@@ -8,6 +8,7 @@ import {
     RigidBody,
     type RapierRigidBody,
 } from '@react-three/rapier';
+import { folder, useControls } from 'leva';
 import { Suspense, useEffect, useMemo, useRef } from 'react';
 import * as THREE from 'three';
 import { clone as cloneSkinned } from 'three/examples/jsm/utils/SkeletonUtils.js';
@@ -19,12 +20,13 @@ import {
     PADDOCK_SKILL_PETS,
     SKILLS_PADDOCK,
     buildSkillsFence,
+    getDefaultSkillsFenceConfig,
     type SkillPetDef,
+    type SkillsFenceConfig,
 } from '@/data/akash-city/skills-paddock';
 import { useCityStore } from '@/components/akash-city/cityStore';
 import { isPetKnockedBack } from '@/components/akash-city/collisionFx';
 
-const FENCE_PIECES = buildSkillsFence();
 /** Capsule half-height + radius — body center so collider rests on y=0 */
 const CAP_HALF = 0.1;
 const CAP_RADIUS = 0.16;
@@ -33,12 +35,168 @@ const PADDOCK_SPEED = 1.05;
 const CITY_SPEED = 1.35;
 const PATROL_SPEED = 1.55;
 
+const FENCE_DEFAULTS = getDefaultSkillsFenceConfig();
+
 type Bounds = {
     minX: number;
     maxX: number;
     minZ: number;
     maxZ: number;
 };
+
+function useSkillsFenceControls(): SkillsFenceConfig {
+    const raw = useControls('Skills Fence', {
+        centerX: {
+            value: FENCE_DEFAULTS.centerX,
+            min: 16,
+            max: 24,
+            step: 0.05,
+            label: 'Center X',
+        },
+        centerZ: {
+            value: FENCE_DEFAULTS.centerZ,
+            min: -8,
+            max: 0,
+            step: 0.05,
+            label: 'Center Z',
+        },
+        size: {
+            value: FENCE_DEFAULTS.size,
+            min: 2,
+            max: 7.5,
+            step: 0.05,
+            label: 'Square size',
+        },
+        scale: {
+            value: FENCE_DEFAULTS.scale,
+            min: 0.8,
+            max: 2,
+            step: 0.05,
+            label: 'Piece scale',
+        },
+        step: {
+            value: FENCE_DEFAULTS.step,
+            min: 0.6,
+            max: 1.6,
+            step: 0.05,
+            label: 'Spacing',
+        },
+        North: folder(
+            {
+                northShift: {
+                    value: FENCE_DEFAULTS.north.shift,
+                    min: -2.5,
+                    max: 2.5,
+                    step: 0.05,
+                    label: 'shift',
+                },
+                northInset: {
+                    value: FENCE_DEFAULTS.north.inset,
+                    min: -2,
+                    max: 2.5,
+                    step: 0.05,
+                    label: 'inset',
+                },
+            },
+            { collapsed: false },
+        ),
+        South: folder(
+            {
+                southShift: {
+                    value: FENCE_DEFAULTS.south.shift,
+                    min: -2.5,
+                    max: 2.5,
+                    step: 0.05,
+                    label: 'shift',
+                },
+                southInset: {
+                    value: FENCE_DEFAULTS.south.inset,
+                    min: -2,
+                    max: 2.5,
+                    step: 0.05,
+                    label: 'inset',
+                },
+            },
+            { collapsed: false },
+        ),
+        East: folder(
+            {
+                eastShift: {
+                    value: FENCE_DEFAULTS.east.shift,
+                    min: -2.5,
+                    max: 2.5,
+                    step: 0.05,
+                    label: 'shift',
+                },
+                eastInset: {
+                    value: FENCE_DEFAULTS.east.inset,
+                    min: -2,
+                    max: 2.5,
+                    step: 0.05,
+                    label: 'inset',
+                },
+            },
+            { collapsed: false },
+        ),
+        West: folder(
+            {
+                westShift: {
+                    value: FENCE_DEFAULTS.west.shift,
+                    min: -2.5,
+                    max: 2.5,
+                    step: 0.05,
+                    label: 'shift',
+                },
+                westInset: {
+                    value: FENCE_DEFAULTS.west.inset,
+                    min: -2,
+                    max: 2.5,
+                    step: 0.05,
+                    label: 'inset',
+                },
+            },
+            { collapsed: false },
+        ),
+    });
+
+    return useMemo(() => {
+        const flat: Record<string, number> = {};
+        for (const [key, value] of Object.entries(raw)) {
+            if (typeof value === 'number') {
+                flat[key] = value;
+            } else if (value && typeof value === 'object') {
+                for (const [nestedKey, nested] of Object.entries(
+                    value as Record<string, unknown>,
+                )) {
+                    if (typeof nested === 'number') flat[nestedKey] = nested;
+                }
+            }
+        }
+        return {
+            centerX: flat.centerX ?? FENCE_DEFAULTS.centerX,
+            centerZ: flat.centerZ ?? FENCE_DEFAULTS.centerZ,
+            size: flat.size ?? FENCE_DEFAULTS.size,
+            scale: flat.scale ?? FENCE_DEFAULTS.scale,
+            step: flat.step ?? FENCE_DEFAULTS.step,
+            north: {
+                shift: flat.northShift ?? FENCE_DEFAULTS.north.shift,
+                inset: flat.northInset ?? FENCE_DEFAULTS.north.inset,
+            },
+            south: {
+                shift: flat.southShift ?? FENCE_DEFAULTS.south.shift,
+                inset: flat.southInset ?? FENCE_DEFAULTS.south.inset,
+            },
+            east: {
+                shift: flat.eastShift ?? FENCE_DEFAULTS.east.shift,
+                inset: flat.eastInset ?? FENCE_DEFAULTS.east.inset,
+            },
+            west: {
+                shift: flat.westShift ?? FENCE_DEFAULTS.west.shift,
+                inset: flat.westInset ?? FENCE_DEFAULTS.west.inset,
+            },
+        };
+    }, [raw]);
+}
 
 function FenceSegment({
     model,
@@ -527,12 +685,18 @@ function PaddockFloor() {
 
 /** Skills block pets + city-wide skill roamers. */
 export function SkillsPaddock() {
+    const fenceConfig = useSkillsFenceControls();
+    const fencePieces = useMemo(
+        () => buildSkillsFence(fenceConfig),
+        [fenceConfig],
+    );
+
     return (
         <group>
             <PaddockFloor />
             <PaddockBarrier />
 
-            {FENCE_PIECES.map((piece) => (
+            {fencePieces.map((piece) => (
                 <Suspense key={piece.id} fallback={null}>
                     <FenceSegment
                         model={piece.model}

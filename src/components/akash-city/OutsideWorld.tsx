@@ -15,6 +15,7 @@ import {
 import { playerWorldPos } from '@/components/akash-city/cityStore';
 import { DistanceLod } from '@/components/akash-city/DistanceLod';
 import { TiledGrassPlane } from '@/components/akash-city/TiledGrassPlane';
+import { ArcheryRange } from '@/components/akash-city/ArcheryRange';
 
 function OutsideProp({ piece }: { piece: OutsidePiece }) {
     const { scene } = useGLTF(piece.model);
@@ -189,6 +190,9 @@ export function OutsideWorld() {
         <group>
             <OuterGrassPlane />
             <NearGrassPatches pieces={OUTSIDE_GRASS} />
+            <Suspense fallback={null}>
+                <ArcheryRange />
+            </Suspense>
             {OUTSIDE_TREES.map((piece) => (
                 <group key={piece.id}>
                     <ForestCollider piece={piece} />
