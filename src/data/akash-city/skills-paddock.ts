@@ -295,10 +295,55 @@ export const ALL_SKILL_PETS: SkillPetDef[] = [
     ...CITY_SKILL_PETS,
 ];
 
-/** Front sign on the south edge of the skills block, facing the road. */
-export const SKILLS_HOARDING = {
-    position: [20.0, 1.05, -7.35] as Vec3,
-    rotationY: Math.PI,
-    width: 2.55,
-    label: 'MY SKILLS',
+export type SkillsFencePiece = {
+    id: string;
+    model: string;
+    position: Vec3;
+    rotationY: number;
+    scale: number;
 };
+
+const FOREST = '/forest/Models/GLB%20format';
+
+/** Forest fence around the skills grass (inside the road loop). */
+export function buildSkillsFence(): SkillsFencePiece[] {
+    const pieces: SkillsFencePiece[] = [];
+    const { minX, maxX, minZ, maxZ } = SKILLS_PADDOCK;
+    const step = 1.05;
+    const scale = 1.25;
+
+    for (let x = minX; x <= maxX + 0.01; x += step) {
+        pieces.push({
+            id: `skills-fence-n-${x.toFixed(1)}`,
+            model: `${FOREST}/fence.glb`,
+            position: [x, 0, maxZ],
+            rotationY: 0,
+            scale,
+        });
+        pieces.push({
+            id: `skills-fence-s-${x.toFixed(1)}`,
+            model: `${FOREST}/fence.glb`,
+            position: [x, 0, minZ],
+            rotationY: 0,
+            scale,
+        });
+    }
+    for (let z = minZ + step; z < maxZ - 0.01; z += step) {
+        pieces.push({
+            id: `skills-fence-w-${z.toFixed(1)}`,
+            model: `${FOREST}/fence.glb`,
+            position: [minX, 0, z],
+            rotationY: Math.PI / 2,
+            scale,
+        });
+        pieces.push({
+            id: `skills-fence-e-${z.toFixed(1)}`,
+            model: `${FOREST}/fence.glb`,
+            position: [maxX, 0, z],
+            rotationY: Math.PI / 2,
+            scale,
+        });
+    }
+
+    return pieces;
+}

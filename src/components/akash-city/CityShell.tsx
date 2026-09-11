@@ -155,6 +155,7 @@ export function CityShell() {
                     </p>
 
                     <Leva
+                        hidden={process.env.NODE_ENV === 'production'}
                         collapsed
                         oneLineLabels
                         hideCopyButton

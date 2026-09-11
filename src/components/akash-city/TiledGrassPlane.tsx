@@ -53,6 +53,7 @@ export function TiledGrassPlane({
                 color={GRASS_BLEND_COLOR}
                 roughness={0.95}
                 metalness={0}
+                depthWrite
             />
         </mesh>
     );

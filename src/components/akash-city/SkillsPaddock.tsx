@@ -1,6 +1,6 @@
 'use client';
 
-import { Billboard, Text, useAnimations, useGLTF } from '@react-three/drei';
+import { Billboard, Clone, Text, useAnimations, useGLTF } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import {
     CapsuleCollider,
@@ -17,14 +17,14 @@ import {
     CITY_ROAM_BOUNDS,
     CITY_SKILL_PETS,
     PADDOCK_SKILL_PETS,
-    SKILLS_HOARDING,
     SKILLS_PADDOCK,
+    buildSkillsFence,
     type SkillPetDef,
 } from '@/data/akash-city/skills-paddock';
-import { FlexNamePlate } from '@/components/akash-city/FlexNamePlate';
 import { useCityStore } from '@/components/akash-city/cityStore';
 import { isPetKnockedBack } from '@/components/akash-city/collisionFx';
 
+const FENCE_PIECES = buildSkillsFence();
 /** Capsule half-height + radius — body center so collider rests on y=0 */
 const CAP_HALF = 0.1;
 const CAP_RADIUS = 0.16;
@@ -39,6 +39,35 @@ type Bounds = {
     minZ: number;
     maxZ: number;
 };
+
+function FenceSegment({
+    model,
+    position,
+    rotationY,
+    scale,
+}: {
+    model: string;
+    position: [number, number, number];
+    rotationY: number;
+    scale: number;
+}) {
+    const { scene } = useGLTF(model);
+    const ySnap = useMemo(() => {
+        const probe = scene.clone(true);
+        probe.position.set(0, 0, 0);
+        probe.rotation.set(0, 0, 0);
+        probe.scale.set(1, 1, 1);
+        probe.updateMatrixWorld(true);
+        const box = new THREE.Box3().setFromObject(probe);
+        return -box.min.y * scale;
+    }, [scene, scale]);
+
+    return (
+        <group position={position} rotation={[0, rotationY, 0]}>
+            <Clone object={scene} scale={scale} position={[0, ySnap, 0]} dispose={null} />
+        </group>
+    );
+}
 
 /** In-scene label: depth-tested + toneMapped off so names stay readable. */
 function SkillTag({ label, height }: { label: string; height: number }) {
@@ -503,6 +532,17 @@ export function SkillsPaddock() {
             <PaddockFloor />
             <PaddockBarrier />
 
+            {FENCE_PIECES.map((piece) => (
+                <Suspense key={piece.id} fallback={null}>
+                    <FenceSegment
+                        model={piece.model}
+                        position={piece.position}
+                        rotationY={piece.rotationY}
+                        scale={piece.scale}
+                    />
+                </Suspense>
+            ))}
+
             {PADDOCK_SKILL_PETS.map((def) => (
                 <Suspense key={def.id} fallback={null}>
                     <FreeRoamer def={def} bounds={SKILLS_PADDOCK} speed={PADDOCK_SPEED} />
@@ -518,16 +558,6 @@ export function SkillsPaddock() {
                     )}
                 </Suspense>
             ))}
-
-            <FlexNamePlate
-                def={{
-                    id: 'flex-skills',
-                    label: SKILLS_HOARDING.label,
-                    position: SKILLS_HOARDING.position,
-                    rotationY: SKILLS_HOARDING.rotationY,
-                    width: SKILLS_HOARDING.width,
-                }}
-            />
         </group>
     );
 }
@@ -535,3 +565,4 @@ export function SkillsPaddock() {
 for (const def of ALL_SKILL_PETS) {
     useGLTF.preload(CITY_PET_BY_ID[def.petId].model);
 }
+useGLTF.preload('/forest/Models/GLB%20format/fence.glb');

@@ -106,15 +106,18 @@ function ForestCollider({ piece }: { piece: OutsidePiece }) {
 function OuterGrassPlane() {
     const cx = (FENCE_EDGE.minX + FENCE_EDGE.maxX) / 2;
     const cz = (FENCE_EDGE.minZ + FENCE_EDGE.maxZ) / 2;
-    const width = FENCE_EDGE.maxX - FENCE_EDGE.minX;
-    const depth = FENCE_EDGE.maxZ - FENCE_EDGE.minZ;
+    // Slightly past the fence so forest edges stay green
+    const width = FENCE_EDGE.maxX - FENCE_EDGE.minX + 2;
+    const depth = FENCE_EDGE.maxZ - FENCE_EDGE.minZ + 2;
+    // Above the grey underlay (y≈-0.05), below roads (ROAD_Y≈0.035)
+    const grassY = 0;
 
     return (
         <Suspense
             fallback={
                 <mesh
                     rotation={[-Math.PI / 2, 0, 0]}
-                    position={[cx, 0, cz]}
+                    position={[cx, grassY, cz]}
                     receiveShadow
                 >
                     <planeGeometry args={[width, depth]} />
@@ -125,8 +128,8 @@ function OuterGrassPlane() {
             <TiledGrassPlane
                 width={width}
                 depth={depth}
-                position={[cx, 0, cz]}
-                tileSize={1.25}
+                position={[cx, grassY, cz]}
+                tileSize={1.15}
             />
         </Suspense>
     );

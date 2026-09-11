@@ -58,7 +58,9 @@ export const FOREST_SCALE = 1.25;
 export const LIGHT_SCALE = 2.55;
 export const POLE_SCALE = 3.35;
 /** Widen road-driveway tiles a bit past the 1×1 grid cell */
-export const ROAD_SCALE = 1.66;
+export const ROAD_SCALE = 1.72;
+/** Keep road decks clearly above the grass plane to avoid distant z-fighting. */
+export const ROAD_Y = 0.035;
 
 /** Home lot between front road (z=-8) and back road (z=0) */
 export const PARK_BOUNDS = {
@@ -80,10 +82,12 @@ function road(
     z: number,
     rotationY = 0,
 ): RoadPiece {
+    // Vertical sits slightly over horizontal so scaled overlaps don't flicker.
+    const isVertical = Math.abs(rotationY % Math.PI) > 0.01;
     return {
         id: `road-${name}-${x}-${z}-${rotationY.toFixed(2)}`,
         model: `${ROADS}/${name}.glb`,
-        position: [x, 0, z],
+        position: [x, ROAD_Y + (isVertical ? 0.004 : 0), z],
         rotationY,
         scale: ROAD_SCALE,
     };
@@ -278,8 +282,14 @@ function buildRoads(): RoadPiece[] {
     for (const x of ROAD_XS) {
         for (const z of ROAD_ZS) {
             if (z > maxZ) continue;
-            // Same driveway tile at junctions — one GLB keeps the city lighter
-            pieces.push(road('road-driveway-double', x, z, Math.PI / 2));
+            // Junction sits slightly above both legs so scaled overlaps don't flicker
+            pieces.push({
+                id: `road-junction-${x}-${z}`,
+                model: `${ROADS}/road-driveway-double.glb`,
+                position: [x, ROAD_Y + 0.008, z],
+                rotationY: Math.PI / 2,
+                scale: ROAD_SCALE,
+            });
         }
     }
 
@@ -296,7 +306,7 @@ function buildRoads(): RoadPiece[] {
         pieces.push({
             id: `tile-${x}-${z}`,
             model: `${ROADS}/tile-low.glb`,
-            position: [x, 0, z],
+            position: [x, ROAD_Y, z],
         });
     }
 
