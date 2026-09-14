@@ -26,6 +26,7 @@ import {
 } from '@/data/akash-city/skills-paddock';
 import { useCityStore } from '@/components/akash-city/cityStore';
 import { isPetKnockedBack } from '@/components/akash-city/collisionFx';
+import { LEVA_ENABLED } from '@/components/akash-city/levaEnabled';
 
 /** Capsule half-height + radius — body center so collider rests on y=0 */
 const CAP_HALF = 0.1;
@@ -683,9 +684,7 @@ function PaddockFloor() {
     );
 }
 
-/** Skills block pets + city-wide skill roamers. */
-export function SkillsPaddock() {
-    const fenceConfig = useSkillsFenceControls();
+function SkillsPaddockScene({ fenceConfig }: { fenceConfig: SkillsFenceConfig }) {
     const fencePieces = useMemo(
         () => buildSkillsFence(fenceConfig),
         [fenceConfig],
@@ -723,6 +722,20 @@ export function SkillsPaddock() {
                 </Suspense>
             ))}
         </group>
+    );
+}
+
+function SkillsPaddockWithLeva() {
+    const fenceConfig = useSkillsFenceControls();
+    return <SkillsPaddockScene fenceConfig={fenceConfig} />;
+}
+
+/** Skills block pets + city-wide skill roamers. */
+export function SkillsPaddock() {
+    return LEVA_ENABLED ? (
+        <SkillsPaddockWithLeva />
+    ) : (
+        <SkillsPaddockScene fenceConfig={getDefaultSkillsFenceConfig()} />
     );
 }
 

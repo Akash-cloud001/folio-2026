@@ -25,6 +25,7 @@ import { DistrictFlexPlates } from '@/components/akash-city/FlexNamePlate';
 import { ExperienceElephant } from '@/components/akash-city/ExperienceElephant';
 import { AboutPenguin } from '@/components/akash-city/AboutPenguin';
 import { SkillsPaddock } from '@/components/akash-city/SkillsPaddock';
+import { LEVA_ENABLED } from '@/components/akash-city/levaEnabled';
 import { FENCE_EDGE } from '@/data/akash-city/bounds';
 
 type BuildingDebugControls = Record<string, number>;
@@ -263,76 +264,7 @@ function DistrictSensors({
     );
 }
 
-export function World() {
-    const controlSchema = useMemo(() => {
-        const editable = CITY_BUILDINGS.filter(isLevaEditable);
-        const byFolder = new Map<string, BuildingPiece[]>();
-
-        for (const piece of editable) {
-            const folderName = levaFolderName(piece);
-            const list = byFolder.get(folderName) ?? [];
-            list.push(piece);
-            byFolder.set(folderName, list);
-        }
-
-        // Stable folder order: districts first, then themed groups
-        const folderOrder = [
-            ...CITY_LOCATIONS.map((l) => l.name),
-            'Park & HOME',
-            'Houses',
-            'City Essentials',
-            'Other Buildings',
-            'Props',
-        ];
-
-        const schema: Record<string, ReturnType<typeof folder>> = {};
-        for (const folderName of folderOrder) {
-            const pieces = byFolder.get(folderName);
-            if (!pieces || pieces.length === 0) continue;
-
-            const folderControls = pieces.reduce<
-                Record<string, LevaNumberInput>
-            >((controls, piece) => {
-                return {
-                    ...controls,
-                    ...pieceControlSchema(piece, displayName(piece)),
-                };
-            }, {});
-
-            schema[folderName] = folder(folderControls, { collapsed: true });
-        }
-
-        return schema;
-    }, []);
-
-    const rawControls = useControls('Akash City Layout', controlSchema) as unknown as Record<
-        string,
-        number | Record<string, number>
-    >;
-
-    const controls = useMemo(() => {
-        const flat: BuildingDebugControls = {};
-        for (const value of Object.values(rawControls)) {
-            if (typeof value === 'number') {
-                continue;
-            }
-            if (value && typeof value === 'object') {
-                for (const [key, nested] of Object.entries(value)) {
-                    if (typeof nested === 'number') {
-                        flat[key] = nested;
-                    }
-                }
-            }
-        }
-        // Also support flattened leaf values if Leva returns them at the top level.
-        for (const [key, value] of Object.entries(rawControls)) {
-            if (typeof value === 'number') {
-                flat[key] = value;
-            }
-        }
-        return flat;
-    }, [rawControls]);
-
+function WorldScene({ controls }: { controls: BuildingDebugControls }) {
     const pieces = CITY_BUILDINGS.map((piece) => {
         const position: [number, number, number] = [
             controls[`${piece.id}__x`] ?? piece.position[0],
@@ -418,6 +350,84 @@ export function World() {
             <DistrictSensors landmarkPositions={landmarkPositions} />
         </group>
     );
+}
+
+function WorldWithLeva() {
+    const controlSchema = useMemo(() => {
+        const editable = CITY_BUILDINGS.filter(isLevaEditable);
+        const byFolder = new Map<string, BuildingPiece[]>();
+
+        for (const piece of editable) {
+            const folderName = levaFolderName(piece);
+            const list = byFolder.get(folderName) ?? [];
+            list.push(piece);
+            byFolder.set(folderName, list);
+        }
+
+        // Stable folder order: districts first, then themed groups
+        const folderOrder = [
+            ...CITY_LOCATIONS.map((l) => l.name),
+            'Park & HOME',
+            'Houses',
+            'City Essentials',
+            'Other Buildings',
+            'Props',
+        ];
+
+        const schema: Record<string, ReturnType<typeof folder>> = {};
+        for (const folderName of folderOrder) {
+            const pieces = byFolder.get(folderName);
+            if (!pieces || pieces.length === 0) continue;
+
+            const folderControls = pieces.reduce<
+                Record<string, LevaNumberInput>
+            >((controls, piece) => {
+                return {
+                    ...controls,
+                    ...pieceControlSchema(piece, displayName(piece)),
+                };
+            }, {});
+
+            schema[folderName] = folder(folderControls, { collapsed: true });
+        }
+
+        return schema;
+    }, []);
+
+    const rawControls = useControls('Akash City Layout', controlSchema) as unknown as Record<
+        string,
+        number | Record<string, number>
+    >;
+
+    const controls = useMemo(() => {
+        const flat: BuildingDebugControls = {};
+        for (const value of Object.values(rawControls)) {
+            if (typeof value === 'number') {
+                continue;
+            }
+            if (value && typeof value === 'object') {
+                for (const [key, nested] of Object.entries(value)) {
+                    if (typeof nested === 'number') {
+                        flat[key] = nested;
+                    }
+                }
+            }
+        }
+        // Also support flattened leaf values if Leva returns them at the top level.
+        for (const [key, value] of Object.entries(rawControls)) {
+            if (typeof value === 'number') {
+                flat[key] = value;
+            }
+        }
+        return flat;
+    }, [rawControls]);
+
+    return <WorldScene controls={controls} />;
+}
+
+export function World() {
+    // Never call useControls in production — it auto-mounts the Leva panel.
+    return LEVA_ENABLED ? <WorldWithLeva /> : <WorldScene controls={{}} />;
 }
 
 for (const url of getCityAssetUrls()) {

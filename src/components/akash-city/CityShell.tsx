@@ -3,6 +3,7 @@
 import dynamic from 'next/dynamic';
 import { Leva } from 'leva';
 import Link from 'next/link';
+import { LEVA_ENABLED } from '@/components/akash-city/levaEnabled';
 import {
     Component,
     type ErrorInfo,
@@ -195,16 +196,17 @@ export function CityShell() {
                         Models: Kenney (CC0)
                     </p>
 
-                    <Leva
-                        hidden={process.env.NODE_ENV === 'production'}
-                        collapsed
-                        oneLineLabels
-                        hideCopyButton
-                        titleBar={{
-                            title: 'Akash City Layout',
-                            filter: false,
-                        }}
-                    />
+                    {LEVA_ENABLED ? (
+                        <Leva
+                            collapsed
+                            oneLineLabels
+                            hideCopyButton
+                            titleBar={{
+                                title: 'Akash City Layout',
+                                filter: false,
+                            }}
+                        />
+                    ) : null}
                 </>
             ) : null}
         </div>

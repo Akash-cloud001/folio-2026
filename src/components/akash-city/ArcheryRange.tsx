@@ -5,6 +5,7 @@ import { CuboidCollider, RigidBody } from '@react-three/rapier';
 import { folder, useControls } from 'leva';
 import { useMemo } from 'react';
 import * as THREE from 'three';
+import { LEVA_ENABLED } from '@/components/akash-city/levaEnabled';
 
 const FOREST = '/forest/Models/GLB%20format';
 const ARROW_URL = `${FOREST}/weapon-arrow.glb`;
@@ -183,10 +184,24 @@ function useArcheryControls() {
     }, [raw]);
 }
 
-/** NW archery props — targets + lodged arrows (no archer / bow). */
-export function ArcheryRange() {
-    const c = useArcheryControls();
+type ArcheryConfig = ReturnType<typeof useArcheryControls>;
 
+const ARCHERY_DEFAULTS: ArcheryConfig = {
+    originX: DEFAULTS.originX,
+    originZ: DEFAULTS.originZ,
+    dirt: DEFAULTS.dirt,
+    platform: DEFAULTS.platform,
+    targetL: DEFAULTS.targetL,
+    targetR: DEFAULTS.targetR,
+    arrowL: DEFAULTS.arrowL,
+    arrowR: DEFAULTS.arrowR,
+    flag: DEFAULTS.flag,
+    plant1: DEFAULTS.plant1,
+    plant2: DEFAULTS.plant2,
+    stones: DEFAULTS.stones,
+};
+
+function ArcheryRangeScene({ c }: { c: ArcheryConfig }) {
     return (
         <group position={[c.originX, 0, c.originZ]}>
             <PoseClone url={DIRT_URL} pose={c.dirt} />
@@ -209,6 +224,20 @@ export function ArcheryRange() {
             <PoseClone url={PLANT_URL} pose={c.plant2} />
             <PoseClone url={STONES_URL} pose={c.stones} />
         </group>
+    );
+}
+
+function ArcheryRangeWithLeva() {
+    const c = useArcheryControls();
+    return <ArcheryRangeScene c={c} />;
+}
+
+/** NW archery props — targets + lodged arrows (no archer / bow). */
+export function ArcheryRange() {
+    return LEVA_ENABLED ? (
+        <ArcheryRangeWithLeva />
+    ) : (
+        <ArcheryRangeScene c={ARCHERY_DEFAULTS} />
     );
 }
 
