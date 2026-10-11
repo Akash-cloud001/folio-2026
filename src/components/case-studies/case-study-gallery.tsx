@@ -124,13 +124,10 @@ function GalleryLightbox({
                         priority
                     />
                 </div>
-                <figcaption className="mt-4">
+                <figcaption className="mt-4 text-center">
                     <p id={titleId} className="text-sm font-medium text-white">
                         {image.title}
                     </p>
-                    {image.description ? (
-                        <p className="mt-1 text-xs leading-relaxed text-zinc-400">{image.description}</p>
-                    ) : null}
                     {hasMany ? (
                         <p className="mt-2 font-geist-mono text-[10px] uppercase tracking-wider text-zinc-500">
                             {index + 1} / {count}
