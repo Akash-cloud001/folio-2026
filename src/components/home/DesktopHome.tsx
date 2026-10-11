@@ -115,15 +115,12 @@ export function DesktopHome() {
             zIndex: MIN_WINDOW_Z + 3,
             component: null,
             defaultPosition: {
-                // Top-right row: [SYS.BACKGROUND] gap [SYS.VISITORS]
+                // Stack under SYS.VISITORS, right edges aligned.
                 x:
                     typeof window !== 'undefined'
-                        ? Math.max(
-                              16,
-                              window.innerWidth - 16 /* right pad */ - 152 /* visitors */ - 12 /* gap */ - 210 /* bg */
-                          )
+                        ? Math.max(16, window.innerWidth - 16 - 210)
                         : 16,
-                y: 12,
+                y: 118,
             },
         },
     ]);

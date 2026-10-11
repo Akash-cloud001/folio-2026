@@ -34,6 +34,7 @@ export const metadata: Metadata = {
         'Tradzu',
         'MyForexFirms',
         'Nestingo',
+        'KTech Store',
     ],
     authors: [{ name: siteConfig.name, url: SITE_URL }],
     creator: siteConfig.name,

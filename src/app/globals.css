@@ -113,6 +113,18 @@ body {
   background: #555;
 }
 
+/* Scroll without a visible bar */
+.hide-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
 /* Utility for dot grid background */
 .bg-dot-grid {
   background-image: radial-gradient(#333 1px, transparent 1px);

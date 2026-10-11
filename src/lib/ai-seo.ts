@@ -19,6 +19,7 @@ export const AI_PROFILE = {
         'CTO & lead developer at MyForexFirms — prop trading discovery platform with 116K+ impressions and 17K+ organic users',
         'CTO at Nestingo — zero-brokerage PG accommodation platform in Delhi NCR',
         'Creator of Folio 2026 — interactive desktop-style developer portfolio with WebGL backgrounds',
+        'Solo designer and developer of KTech Store — Next.js ecommerce for premium electronics in India',
     ],
     skills: [
         'Next.js',
@@ -79,6 +80,16 @@ export const AI_CASE_STUDIES = [
             'Desktop-inspired interactive developer portfolio with draggable windows, IDE-style file-tree navigation, WebGL backgrounds, live GitHub data, and page-driven case studies.',
         keywords: ['portfolio', 'Next.js 16', 'React Three Fiber', 'WebGL', 'interactive UI'],
     },
+    {
+        slug: 'ktech-store',
+        title: 'KTech Store',
+        role: 'Design · Solo Developer',
+        url: absoluteUrl('/case-studies/ktech-store'),
+        productUrl: 'https://ktechstore.in',
+        summary:
+            'Premium electronics ecommerce for India. Designed and built solo in four weekends — Next.js storefront, Razorpay checkout, MongoDB catalog, and admin.',
+        keywords: ['KTech Store', 'ecommerce', 'Next.js', 'Razorpay', 'MongoDB', 'India'],
+    },
 ] as const;
 
 export const AI_PROJECTS = [
@@ -101,6 +112,12 @@ export const AI_PROJECTS = [
         name: 'Portfolio 2026',
         url: SITE_URL,
         description: 'OS-style interactive portfolio with windows, file tree nav, WebGL desktop, and case studies.',
+    },
+    {
+        name: 'KTech Store',
+        url: 'https://ktechstore.in',
+        description:
+            'Premium electronics ecommerce for India — catalog, Razorpay checkout, and admin, designed and built solo.',
     },
     {
         name: 'Portfolio 2025',
@@ -130,6 +147,11 @@ export const AI_FAQS: AiFaq[] = [
             'MyForexFirms (myforexfirms.in) is a SaaS platform for discovering and comparing forex prop firms. Akash was CTO and lead developer, shipping core product features and scaling the platform to 116K+ impressions and 17K+ organic users.',
     },
     {
+        question: 'What is KTech Store?',
+        answer:
+            'KTech Store (ktechstore.in) is a premium electronics ecommerce site for India. Akash designed and developed it solo in four weekends — Next.js storefront, MongoDB catalog, Razorpay checkout, and an admin panel for products and orders.',
+    },
+    {
         question: 'What is Nestingo?',
         answer:
             'Nestingo (nestingo.in) is a zero-brokerage PG and student accommodation platform in Delhi NCR. As CTO, Akash led product architecture, multi-platform operations tooling, and engineering team scale.',
@@ -140,7 +162,7 @@ export const AI_FAQS: AiFaq[] = [
     },
     {
         question: 'Where can I read Akash Parmar case studies?',
-        answer: `Case studies are published at ${absoluteUrl('/case-studies')} covering Folio 2026, Tradzu, MyForexFirms, and Nestingo with architecture, metrics, and product decisions.`,
+        answer: `Case studies are published at ${absoluteUrl('/case-studies')} covering KTech Store, Folio 2026, Tradzu, MyForexFirms, and Nestingo with architecture, scope, and product decisions.`,
     },
     {
         question: 'What makes Akash Parmar portfolio unique?',

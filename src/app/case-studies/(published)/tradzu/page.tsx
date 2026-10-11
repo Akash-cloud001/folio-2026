@@ -27,7 +27,7 @@ const study: CaseStudyContent = {
     title: 'Tradzu',
     tagline:
         'Building a gamified rewards ecosystem for traders — loyalty infrastructure, marketplace retention, and financial-grade accounting as CTO.',
-    year: '2025',
+    year: '2026',
     role: 'CTO',
     client: 'Tradzu',
     categories: [

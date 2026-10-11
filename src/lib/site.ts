@@ -11,6 +11,8 @@ export const CASE_STUDY_SLUGS = [
     'tradzu',
     'my-forex-firms',
     'nestingo',
+    'nexetro',
+    'ktech-store',
 ] as const;
 
 export type CaseStudySlug = (typeof CASE_STUDY_SLUGS)[number];
@@ -19,7 +21,7 @@ export const siteConfig = {
     name: 'Akash Parmar',
     title: 'Akash Parmar — Portfolio',
     description:
-        'Full stack developer portfolio — interactive desktop UI, Next.js, React, WebGL, and CTO case studies for Tradzu, MyForexFirms, and Nestingo.',
+        'Full stack developer portfolio — interactive desktop UI, Next.js, React, WebGL, and case studies for KTech Store, Tradzu, MyForexFirms, and Nestingo.',
     ogImagePath: '/og.png',
     ogImageAlt: 'Akash Parmar — Portfolio 2026',
     email: 'akashparmar6561@gmail.com',

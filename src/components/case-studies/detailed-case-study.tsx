@@ -152,16 +152,16 @@ function renderSection(section: CaseStudySection, index: number) {
                         ))}
                     </div>
                     {section.stats?.length ? (
-                        <dl className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                        <dl className="mt-6 flex flex-wrap gap-2">
                             {section.stats.map((s) => (
                                 <div
                                     key={s.label}
-                                    className="rounded-lg border border-white/10 bg-white/2 px-4 py-3"
+                                    className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5"
                                 >
                                     <dt className="font-geist-mono text-[10px] uppercase tracking-wider text-zinc-500">
                                         {s.label}
                                     </dt>
-                                    <dd className="mt-1 text-lg font-medium text-white">{s.value}</dd>
+                                    <dd className="text-sm font-medium text-white">{s.value}</dd>
                                 </div>
                             ))}
                         </dl>
@@ -171,16 +171,13 @@ function renderSection(section: CaseStudySection, index: number) {
 
         case 'challenge':
             return (
-                <section key={index} className="pt-14">
+                <section key={index} className="pt-10">
                     <SectionLabel>{section.title}</SectionLabel>
-                    <ul className="mt-8 flex flex-col gap-4">
+                    <ul className="mt-4 list-disc space-y-3 pl-5 text-sm marker:text-zinc-500">
                         {section.items.map((item) => (
-                            <li
-                                key={item.title}
-                                className="rounded-lg border border-white/10 bg-white/2 p-5 sm:p-6"
-                            >
-                                <h3 className="text-base font-semibold text-white">{item.title}</h3>
-                                <p className="mt-2 text-sm leading-relaxed text-zinc-400">{item.description}</p>
+                            <li key={item.title} className="leading-snug">
+                                <span className="font-semibold text-white">{item.title}</span>
+                                <span className="text-zinc-400"> — {item.description}</span>
                             </li>
                         ))}
                     </ul>
@@ -215,20 +212,20 @@ function renderSection(section: CaseStudySection, index: number) {
 
         case 'metrics':
             return (
-                <section key={index} className="mt-16 border-t border-white/10 pt-14">
+                <section key={index} className="mt-10 border-t border-white/10 pt-8">
                     <SectionLabel>{section.title}</SectionLabel>
-                    <ul className="mt-8 grid gap-4 sm:grid-cols-2">
+                    <ul className="mt-4 grid gap-2.5 sm:grid-cols-2">
                         {section.metrics.map((m) => (
                             <li
                                 key={m.label}
-                                className="rounded-lg border border-white/10 bg-white/2 p-5 sm:p-6"
+                                className="rounded-lg border border-white/10 bg-white/2 px-3.5 py-3"
                             >
                                 <p className="font-geist-mono text-[10px] uppercase tracking-wider text-zinc-500">
                                     {m.label}
                                 </p>
-                                <p className="mt-2 text-2xl font-semibold text-white">{m.value}</p>
+                                <p className="mt-1 text-lg font-semibold text-white">{m.value}</p>
                                 {m.description ? (
-                                    <p className="mt-2 text-sm leading-relaxed text-zinc-500">{m.description}</p>
+                                    <p className="mt-1 text-sm leading-snug text-zinc-500">{m.description}</p>
                                 ) : null}
                             </li>
                         ))}
@@ -248,22 +245,22 @@ function renderSection(section: CaseStudySection, index: number) {
 
         case 'cards':
             return (
-                <section key={index} className="mt-16 border-t border-white/10 pt-14">
+                <section key={index} className="mt-10 border-t border-white/10 pt-8">
                     <SectionLabel>{section.title}</SectionLabel>
-                    <ul className="mt-8 grid gap-4 sm:grid-cols-2">
+                    <ul className="mt-4 grid gap-2.5 sm:grid-cols-2">
                         {section.cards.map((card) => (
                             <li
                                 key={card.title}
-                                className="flex flex-col rounded-lg border border-white/10 bg-white/2 p-5 sm:p-6"
+                                className="flex flex-col rounded-lg border border-white/10 bg-white/2 px-3.5 py-3"
                             >
-                                <h3 className="text-base font-semibold text-white">{card.title}</h3>
-                                <p className="mt-2 flex-1 text-sm leading-relaxed text-zinc-400">{card.description}</p>
+                                <h3 className="text-sm font-semibold text-white">{card.title}</h3>
+                                <p className="mt-1 flex-1 text-sm leading-snug text-zinc-400">{card.description}</p>
                                 {card.stats?.length ? (
-                                    <ul className="mt-4 flex flex-wrap gap-2">
+                                    <ul className="mt-2.5 flex flex-wrap gap-1.5">
                                         {card.stats.map((s) => (
                                             <li
                                                 key={s}
-                                                className="rounded-md border border-white/10 bg-black/40 px-2.5 py-1 font-geist-mono text-[10px] uppercase tracking-wider text-zinc-400"
+                                                className="rounded-md border border-white/10 bg-black/40 px-2 py-0.5 font-geist-mono text-[10px] uppercase tracking-wider text-zinc-400"
                                             >
                                                 {s}
                                             </li>
@@ -280,12 +277,12 @@ function renderSection(section: CaseStudySection, index: number) {
             return (
                 <section
                     key={index}
-                    className="mt-16 border border-white/10 bg-linear-to-br from-white/6 to-transparent px-6 py-10 sm:px-10 sm:py-12"
+                    className="mt-10 border border-white/10 bg-linear-to-br from-white/6 to-transparent px-4 py-5 sm:px-5"
                 >
-                    <blockquote className="text-lg font-medium leading-relaxed text-white sm:text-xl">
+                    <blockquote className="text-base font-medium leading-snug text-white sm:text-lg">
                         “{section.quote}”
                     </blockquote>
-                    <footer className="mt-6 font-geist-mono text-sm text-zinc-400">
+                    <footer className="mt-3 font-geist-mono text-xs text-zinc-400">
                         <cite className="not-italic text-zinc-300">{section.author}</cite>
                         {section.role ? <span className="text-zinc-500"> — {section.role}</span> : null}
                     </footer>
@@ -294,18 +291,18 @@ function renderSection(section: CaseStudySection, index: number) {
 
         case 'results':
             return (
-                <section key={index} className="mt-16 border-t border-white/10 pt-14">
+                <section key={index} className="mt-10 border-t border-white/10 pt-8">
                     <SectionLabel>{section.title}</SectionLabel>
-                    <ul className="mt-8 grid gap-4 sm:grid-cols-2">
+                    <ul className="mt-4 grid gap-2.5 sm:grid-cols-2">
                         {section.items.map((item) => (
                             <li
                                 key={item.label}
-                                className="rounded-lg border border-emerald-500/20 bg-emerald-500/4 p-5 sm:p-6"
+                                className="rounded-lg border border-emerald-500/20 bg-emerald-500/4 px-3.5 py-3"
                             >
                                 <p className="text-sm font-medium text-zinc-300">{item.label}</p>
-                                <p className="mt-2 text-2xl font-semibold text-emerald-300/95">{item.value}</p>
+                                <p className="mt-0.5 text-lg font-semibold text-emerald-300/95">{item.value}</p>
                                 {item.description ? (
-                                    <p className="mt-2 text-sm leading-relaxed text-zinc-500">{item.description}</p>
+                                    <p className="mt-1 text-sm leading-snug text-zinc-500">{item.description}</p>
                                 ) : null}
                             </li>
                         ))}
@@ -317,13 +314,13 @@ function renderSection(section: CaseStudySection, index: number) {
             return (
                 <section
                     key={index}
-                    className="mt-16 border border-white/10 bg-white/3 px-6 py-10 sm:px-10 sm:py-12"
+                    className="mt-8 border border-white/10 bg-white/3 px-4 py-5 sm:px-5"
                 >
-                    <h2 className="text-2xl font-semibold tracking-tight text-white sm:text-3xl">{section.title}</h2>
-                    <p className="mt-3 max-w-2xl text-sm leading-relaxed text-zinc-400 sm:text-base">
+                    <h2 className="text-xl font-semibold tracking-tight text-white sm:text-2xl">{section.title}</h2>
+                    <p className="mt-2 max-w-2xl text-sm leading-snug text-zinc-400">
                         {section.description}
                     </p>
-                    <div className="mt-8 flex flex-wrap gap-3">
+                    <div className="mt-4 flex flex-wrap gap-2">
                         <CtaControl label={section.primaryCta} href={section.primaryCtaHref} variant="default" />
                         {section.secondaryCta ? (
                             <CtaControl
@@ -343,18 +340,17 @@ function renderSection(section: CaseStudySection, index: number) {
     }
 }
 
-export function CaseStudyView({ study }: { study: CaseStudyContent }) {
+export function CaseStudyView({
+    study,
+    preview = false,
+}: {
+    study: CaseStudyContent;
+    /** Placeholder pages skip structured data so filler copy is not indexed as an article. */
+    preview?: boolean;
+}) {
     return (
         <article>
-            <nav className="font-geist-mono text-xs text-zinc-500">
-                <Link href="/case-studies" className="transition-colors hover:text-white">
-                    Case studies
-                </Link>
-                <span className="mx-2 text-zinc-600">/</span>
-                <span className="text-zinc-400">{study.title}</span>
-            </nav>
-
-            <div className="relative mt-6 aspect-[21/9] max-h-[min(70vh,500px)] w-full overflow-hidden rounded-xl border border-white/10 bg-zinc-900/50">
+            <div className="relative aspect-[21/9] max-h-[min(70vh,500px)] w-full overflow-hidden rounded-xl border border-white/10 bg-zinc-900/50 -mt-4">
                 <Image
                     src={study.coverImage}
                     alt={`${study.title} cover`}
@@ -365,9 +361,9 @@ export function CaseStudyView({ study }: { study: CaseStudyContent }) {
                 />
             </div>
 
-            <p className="mt-6 text-lg text-zinc-400">{study.tagline}</p>
+            <p className="mt-3 text-sm text-zinc-400">{study.tagline}</p>
 
-            <dl className="mt-6 flex flex-wrap gap-x-8 gap-y-3 border-y border-white/10 py-4 font-geist-mono text-xs uppercase tracking-wider text-zinc-500">
+            <dl className="mt-3 flex flex-wrap gap-x-8 gap-y-3 border-y border-white/10 py-4 font-geist-mono text-xs uppercase tracking-wider text-zinc-500">
                 <div>
                     <dt className="text-zinc-600">Year</dt>
                     <dd className="mt-0.5 text-zinc-300">{study.year}</dd>
@@ -390,7 +386,7 @@ export function CaseStudyView({ study }: { study: CaseStudyContent }) {
                 ) : null}
             </dl>
 
-            {study.categories?.length ? (
+            {/* {study.categories?.length ? (
                 <ul className="mt-4 flex flex-wrap gap-2">
                     {study.categories.map((c) => (
                         <li
@@ -401,11 +397,11 @@ export function CaseStudyView({ study }: { study: CaseStudyContent }) {
                         </li>
                     ))}
                 </ul>
-            ) : null}
+            ) : null} */}
 
             {study.sections.map((section, index) => renderSection(section, index))}
 
-            <CaseStudyJsonLd study={study} />
+            {preview ? null : <CaseStudyJsonLd study={study} />}
         </article>
     );
 }

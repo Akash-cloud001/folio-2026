@@ -35,6 +35,17 @@ function WindowEntryIcon({
     );
 }
 
+function BrandLogo({ src }: { src: string }) {
+    return (
+        <img
+            src={src}
+            alt=""
+            aria-hidden
+            className="size-4 shrink-0 rounded-[3px] object-contain"
+        />
+    );
+}
+
 interface FileTreeNavProps {
     onSelect: (id: string) => void;
     openWindowIds?: string[];
@@ -112,36 +123,61 @@ export function FileTreeNav({ onSelect, openWindowIds = [], className }: FileTre
                     </File>
                 </Folder>
                 <Folder value="case-studies" element="case-studies">
-                    
+                    <File
+                        value="case-study-nexetro"
+                        fileIcon={<BrandLogo src="/logos/nexetro.svg" />}
+                        onClick={() => router.push('/case-studies/nexetro')}
+                    >
+                        <p>nexetro.md</p>
+                        <span className="rounded-full border border-white/20 bg-white/10 px-1.5 py-px font-geist-mono text-[9px] uppercase tracking-wider text-zinc-300">
+                            Coming soon
+                        </span>
+                    </File>
                     <File
                         value="case-study-tradzu"
-                        fileIcon={<FileIcon className="size-4 shrink-0 text-white/80" aria-hidden />}
+                        fileIcon={<BrandLogo src="/logos/tradzu.svg" />}
                         onClick={() => router.push('/case-studies/tradzu')}
                     >
                         <p>tradzu.md</p>
                     </File>
                     <File
                         value="case-study-my-forex-firms"
-                        fileIcon={<FileIcon className="size-4 shrink-0 text-white/80" aria-hidden />}
+                        fileIcon={<BrandLogo src="/logos/myforexfirms.png" />}
                         onClick={() => router.push('/case-studies/my-forex-firms')}
                     >
                         <p>my-forex-firms.md</p>
                     </File>
                     <File
-                        value="case-study-nestingo"
-                        fileIcon={<FileIcon className="size-4 shrink-0 text-white/80" aria-hidden />}
-                        onClick={() => router.push('/case-studies/nestingo')}
+                        value="case-study-ktech-store"
+                        fileIcon={<BrandLogo src="/logos/ktech.png" />}
+                        onClick={() => router.push('/case-studies/ktech-store')}
                     >
-                        <p>nestingo.md</p>
+                        <p>ktech-store.md</p>
                     </File>
                     <File
                         value="case-study-folio-2026"
-                        fileIcon={<FileIcon className="size-4 shrink-0 text-white/80" aria-hidden />}
+                        fileIcon={<BrandLogo src="/logos/folio2026.svg" />}
                         onClick={() => router.push('/case-studies/folio-2026')}
                     >
                         <p>folio-2026.md</p>
                     </File>
+                    <File
+                        value="case-study-nestingo"
+                        fileIcon={<BrandLogo src="/logos/nestingo.svg" />}
+                        onClick={() => router.push('/case-studies/nestingo')}
+                    >
+                        <p>nestingo.md</p>
+                    </File>
                 </Folder>
+                <File
+                    value="resume"
+                    fileIcon={<FileIcon className="size-4 shrink-0 text-white/80" aria-hidden />}
+                    onClick={() =>
+                        window.open('/Akash_Parmar_FDE_Resume-1.pdf', '_blank', 'noopener,noreferrer')
+                    }
+                >
+                    <p>Resume.pdf</p>
+                </File>
             </Tree>
         </motion.div>
     );

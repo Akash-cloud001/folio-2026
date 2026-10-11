@@ -17,7 +17,7 @@ export const metadata: Metadata = buildCaseStudyMetadata({
         'MyForexFirms',
         'frontend architecture',
     ],
-    coverImage: '/projects/myforexfirms/dashboard.png',
+    coverImage: '/projects/myforexfirms/hero.png',
     coverImageAlt: 'MyForexFirms dashboard — prop trading platform',
 });
 
@@ -31,7 +31,7 @@ const study: CaseStudyContent = {
     client: 'MyForexFirms',
     duration: '6+ Months',
     categories: ['Product', 'Engineering', 'Frontend', 'Architecture', 'Team Leadership'],
-    coverImage: '/projects/myforexfirms/dashboard.png',
+    coverImage: '/projects/myforexfirms/hero.png',
     sections: [
         {
             type: 'hero',

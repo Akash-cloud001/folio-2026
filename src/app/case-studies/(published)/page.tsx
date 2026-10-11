@@ -6,7 +6,7 @@ import { buildPageMetadata } from '@/lib/seo';
 export const metadata: Metadata = buildPageMetadata({
     title: 'Case studies',
     description:
-        'Selected project case studies — Folio 2026, Tradzu, My Forex Firms, Nestingo, and more.',
+        'Selected project case studies — Folio 2026, Tradzu, My Forex Firms, Nestingo, KTech Store, and more.',
     path: '/case-studies',
     keywords: [
         'case studies',
@@ -19,6 +19,14 @@ export const metadata: Metadata = buildPageMetadata({
 
 /** Add an entry when you create `src/app/case-studies/<slug>/page.tsx`. */
 const CASE_STUDIES = [
+    {
+        slug: 'nexetro',
+        title: 'Nexetro',
+        tagline: 'A perpetual firm. Trade markets. Prove skills. Get Paid.',
+        year: '2026',
+        role: 'Coming soon',
+        coverImage: '/projects/nexetro.png',
+    },
     {
         slug: 'tradzu',
         title: 'Tradzu',
@@ -38,13 +46,13 @@ const CASE_STUDIES = [
         coverImage: '/projects/myforexfirms.png',
     },
     {
-        slug: 'nestingo',
-        title: 'Nestingo',
+        slug: 'ktech-store',
+        title: 'KTech Store',
         tagline:
-            'CTO on a tech-driven student accommodation ecosystem in Delhi NCR — discovery, operations, and admin infrastructure.',
-        year: '2024',
-        role: 'CTO',
-        coverImage: '/projects/nestingo.png',
+            'Solo design and build of a premium electronics store for India — catalog, Razorpay checkout, and admin in four weekends.',
+        year: '2026',
+        role: 'Design · Solo Developer',
+        coverImage: '/projects/ktech/cover.jpg',
     },
     {
         slug: 'folio-2026',
@@ -54,7 +62,16 @@ const CASE_STUDIES = [
         year: '2026',
         role: 'Design · Frontend · Architecture',
         coverImage: '/projects/folio-2026/landng-page.png',
-    }
+    },
+    {
+        slug: 'nestingo',
+        title: 'Nestingo',
+        tagline:
+            'CTO on a tech-driven student accommodation ecosystem in Delhi NCR — discovery, operations, and admin infrastructure.',
+        year: '2024',
+        role: 'CTO',
+        coverImage: '/projects/nestingo.png',
+    },
 ] as const;
 
 export default function CaseStudiesIndexPage() {
@@ -79,13 +96,19 @@ export default function CaseStudiesIndexPage() {
                             className="group block overflow-hidden rounded-lg border border-white/10 bg-white/2 transition-colors hover:border-white/25 hover:bg-white/4"
                         >
                             <div className="relative aspect-[21/9] w-full bg-zinc-900/50">
-                                <Image
-                                    src={project.coverImage}
-                                    alt={`${project.title} cover`}
-                                    fill
-                                    sizes="(max-width: 768px) 100vw, min(896px, 100vw)"
-                                    className="object-cover object-top transition-transform duration-300 group-hover:scale-[1.02]"
-                                />
+                                {project.coverImage ? (
+                                    <Image
+                                        src={project.coverImage}
+                                        alt={`${project.title} cover`}
+                                        fill
+                                        sizes="(max-width: 768px) 100vw, min(896px, 100vw)"
+                                        className="object-cover object-top transition-transform duration-300 group-hover:scale-[1.02]"
+                                    />
+                                ) : (
+                                    <div className="flex h-full items-center justify-center font-geist-mono text-xs uppercase tracking-[0.2em] text-zinc-500">
+                                        Coming soon
+                                    </div>
+                                )}
                             </div>
                             <div className="p-4">
                                 <div className="flex flex-wrap items-baseline justify-between gap-2">

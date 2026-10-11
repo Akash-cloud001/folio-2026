@@ -59,7 +59,7 @@ export function getSiteJsonLd() {
                 url: `${SITE_URL}/case-studies`,
                 name: 'Case studies — Akash Parmar',
                 description:
-                    'Selected project case studies — Folio 2026, Tradzu, My Forex Firms, Nestingo.',
+                    'Selected project case studies — Folio 2026, Tradzu, My Forex Firms, Nestingo, KTech Store.',
                 isPartOf: { '@id': websiteId },
                 hasPart: CASE_STUDY_SLUGS.map((slug) => ({
                     '@type': 'WebPage',
